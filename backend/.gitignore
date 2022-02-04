@@ -1,0 +1,13 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+.vs
+bin
+obj
+
+/API/bin
+/API/obj
+/API.Tests/bin
+/API.Tests/obj
+/API.DataLayer/bin
+/API.DataLayer/obj
