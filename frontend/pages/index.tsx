@@ -1,7 +1,15 @@
 import type {NextPage} from "next";
+import Link from "next/link";
 
-const Home: NextPage = () => {
-    return <div className="">Hello Nextjs</div>;
+const IndexPage: NextPage = () => {
+    return (
+        <div className="">
+            Hello Nextjs
+            <Link href={"/home/"}>
+                <a>home page</a>
+            </Link>
+        </div>
+    );
 };
 
-export default Home;
+export default IndexPage;

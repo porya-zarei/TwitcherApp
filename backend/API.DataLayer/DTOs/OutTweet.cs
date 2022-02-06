@@ -11,7 +11,6 @@ public class OutTweet
     public string? Video { get; set; }
 
     public long? LikesCount { get; set; } = 0;
-    public Tweet? BaseTweet { get; set; }
     public DateTime CreatedAt { get; set; }
     public List<string>? Hashtags { get; set; }
     public OutUser? Sender { get; set; }
@@ -23,7 +22,6 @@ public class OutTweet
             TweetId = tweet.TweetId,
             Title = tweet.Title,
             Content = tweet.Content,
-            BaseTweet = tweet.BaseTweet,
             CreatedAt = tweet.CreatedAt,
             Hashtags = tweet.Hashtags,
             Images = tweet.Images,
