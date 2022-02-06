@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace API.DataLayer.Services;
 
-public class UserRepository:Repository<User>,IUserRepository
+public class UsersRepository:Repository<User>,IUsersRepository
 {
-    public UserRepository(MainContext context):base(context)
+    public UsersRepository(MainContext context):base(context)
     {
 
     }
@@ -28,5 +28,10 @@ public class UserRepository:Repository<User>,IUserRepository
             else return null;
         }
         else return null;
+    }
+
+    public async Task<User?> GetUserWithUserName(string userName)
+    {
+        return (await _set.FirstOrDefaultAsync(u => u.UserName == userName));
     }
 }

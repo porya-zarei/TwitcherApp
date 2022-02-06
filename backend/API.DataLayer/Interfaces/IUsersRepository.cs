@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace API.DataLayer.Interfaces;
 
-public interface IUserRepository : IRepository<User>
+public interface IUsersRepository : IRepository<User>
 {
     Task<User?> AuthenticateUser(LoginUser loginUser);
+    Task<User?> GetUserWithUserName(string userName);
 }

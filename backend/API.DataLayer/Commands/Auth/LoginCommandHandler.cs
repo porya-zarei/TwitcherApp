@@ -7,10 +7,10 @@ public class LoginUserCommand : IRequest<OutUser?>
 
 public class LoginCommandHandler : IRequestHandler<LoginUserCommand, OutUser?>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUsersRepository _userRepository;
     public LoginCommandHandler(MainContext context)
     {
-        _userRepository = new UserRepository(context);
+        _userRepository = new UsersRepository(context);
     }
     public async Task<OutUser?> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {

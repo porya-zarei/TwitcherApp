@@ -7,11 +7,11 @@ public class RegisterUserCommand : IRequest<OutUser>
 
 public class RegisterCommandHandler : IRequestHandler<RegisterUserCommand, OutUser>
 {
-    private readonly IUserRepository _repository;
+    private readonly IUsersRepository _repository;
 
     public RegisterCommandHandler(MainContext context)
     {
-        _repository = new UserRepository(context);
+        _repository = new UsersRepository(context);
     }
 
     public async Task<OutUser> Handle(RegisterUserCommand request, CancellationToken cancellationToken)

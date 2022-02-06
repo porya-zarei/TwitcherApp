@@ -27,8 +27,6 @@ public record OutUser
 
     public UserTypes UserType { get; set; } = UserTypes.Bronze;
 
-    public ICollection<Tweet> Tweets { get; set; } = new List<Tweet>();
-
     public int FollowingsCount { get; set; }
     public int FollowersCount { get; set; }
     public ICollection<Category>? InterestedCategories { get; set; } = new List<Category>();
@@ -50,7 +48,6 @@ public record OutUser
             InterestedCategories = user.InterestedCategories!.ToList(),
             JoinedAt = user.JoinedAt,
             StatusText = user.StatusText,
-            Tweets = user.Tweets,
             UserName = user.UserName,
             UserType = user.UserType
         }:null;

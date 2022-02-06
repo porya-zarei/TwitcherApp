@@ -7,11 +7,11 @@ public class GetUsersQuery : IRequest<List<OutUser>>
 
 public class GetUsersQueryHandler:IRequestHandler<GetUsersQuery,List<OutUser>>
 {
-    private readonly IUserRepository _repository;
+    private readonly IUsersRepository _repository;
 
     public GetUsersQueryHandler(MainContext context)
     {
-        _repository = new UserRepository(context);
+        _repository = new UsersRepository(context);
     }
 
     public async Task<List<OutUser>> Handle(GetUsersQuery request, CancellationToken cancellationToken)

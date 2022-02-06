@@ -6,11 +6,10 @@ public static class GlobalConfigs
     public const string TokenKey = "token";
     public static CookieOptions CookieOptions(DateTime expireTime) => new()
     {
-        Domain = ClientUrl,
         Expires = expireTime,
-        HttpOnly = true,
-        Secure = true,
-        IsEssential = true,
+        HttpOnly = false,
+        Secure = false,
+        IsEssential = false,
         Path = "/",
         SameSite = SameSiteMode.Unspecified
     };

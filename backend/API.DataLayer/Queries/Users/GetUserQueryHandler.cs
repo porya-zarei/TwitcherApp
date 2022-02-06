@@ -8,10 +8,10 @@ public class GetUserQuery : IRequest<OutUser>
 
 public class GetUserQueryHandler : IRequestHandler<GetUserQuery, OutUser>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUsersRepository _userRepository;
     public GetUserQueryHandler(MainContext context)
     {
-        _userRepository = new UserRepository(context);
+        _userRepository = new UsersRepository(context);
     }
     public Task<OutUser> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {

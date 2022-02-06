@@ -3,30 +3,31 @@
 public class Tweet
 {
     [Key]
-    public Guid TweetId { get; set; }
+    public Guid TweetId { get; set; } = Guid.NewGuid();
     public TweetTypes ReTweetType { get; set; } = TweetTypes.Tweet;
 
     public bool IsDeleted { get; set; } = false;
 
     [Required]
-    public string? Title { get; set; }
+    public string Title { get; set; } = string.Empty;
     [Required]
-    public string? Content { get; set; }
+    public string Content { get; set; } = string.Empty;
 
-    public List<string>? Images { get; set; }
-    public string? Video {get;set;}
+    public List<string>? Images { get; set; } = new List<string>();
+    public string? Video {get;set;} = string.Empty;
 
-    public long? LikesCount { get; set;}
+    public long? LikesCount { get; set;} = 0;
     public Guid? BaseTweetId { get; set; }
     public Tweet? BaseTweet { get; set; }
     public DateTime CreatedAt { get; set; }
-    public List<string>? Hashtags { get; set; }
-    
-    [Required]
-    public Guid SenderId { get; set; }
-    public User? Sender { get; set; }
+    public List<string>? Hashtags { get; set; } = new List<string>();
 
-    public ICollection<Tweet>? Replies { get; set; }
+    [Required]
+    public Guid? SenderId { get; set; } = Guid.NewGuid();
+    [JsonIgnore]
+    public User? Sender { get; set; } = new ();
+    [JsonIgnore]
+    public ICollection<Tweet>? Replies { get; set; } =  new List<Tweet>();
 
 }
 
