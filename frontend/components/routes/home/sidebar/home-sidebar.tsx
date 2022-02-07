@@ -2,9 +2,9 @@ import {FC} from "react";
 import SidebarAccount from "./account/sidebar-account";
 import SidebarNavigation from "./navigation/sidebar-navigation";
 
-interface SidebarProps {}
+interface HomeSidebarProps {}
 
-const Sidebar: FC<SidebarProps> = () => {
+const HomeSidebar: FC<HomeSidebarProps> = () => {
     return (
         <div className="w-full">
             <div className="w-full min-h-0 md:min-h-screen p-2 flex flex-row flex-wrap justify-center content-between items-center">
@@ -19,4 +19,4 @@ const Sidebar: FC<SidebarProps> = () => {
     );
 };
 
-export default Sidebar;
+export default HomeSidebar;
