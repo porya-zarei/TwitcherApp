@@ -3,7 +3,7 @@ import {FC} from "react";
 interface FooterLayoutProps {}
 
 const FooterLayout: FC<FooterLayoutProps> = () => {
-    return <footer className=""></footer>;
+    return <footer></footer>;
 };
 
 export default FooterLayout;

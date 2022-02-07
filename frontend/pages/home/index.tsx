@@ -3,7 +3,7 @@ import {dehydrate, DehydratedState, QueryClient} from "react-query";
 import {getQueryClient} from "../../api/prefetch/prefetchData";
 import {getFeedTweets} from "../../api/queries/useFeedTweets";
 import Home from "../../components/routes/home/home";
-import HomeContextProvider, {useHomeContext} from "../../contexts/home-context";
+import HomeContextProvider from "../../contexts/home-context/home-context";
 import {Tweet} from "../../types/data/tweet";
 import {getCookieValueServer} from "../../utils/cookies-helpers";
 
@@ -16,7 +16,6 @@ interface HomePageProps {
 const HomePage: NextPage<HomePageProps> = ({feedTweets}) => {
     return (
         <HomeContextProvider initial={{feedTweets}}>
-            <div>Home Page</div>
             <Home />
         </HomeContextProvider>
     );
@@ -29,7 +28,6 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async ({
 }) => {
     const token = getCookieValueServer(req as NextApiRequest, "token") ?? "";
     const {result: feedTweets} = await getFeedTweets("user1", token)();
-    console.log("feedTweets => ", feedTweets.length,token);
     const queryClient: QueryClient = getQueryClient({
         feedTweetsData: {
             tweets: feedTweets,

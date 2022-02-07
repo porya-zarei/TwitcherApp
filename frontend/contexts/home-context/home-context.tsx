@@ -1,7 +1,6 @@
 import {Context, Dispatch, useContext, useReducer} from "react";
 import {createContext, FC, useMemo} from "react";
-import {useFeedTweets} from "../api/queries/useFeedTweets";
-import {Tweet} from "../types/data/tweet";
+import {Tweet} from "../../types/data/tweet";
 
 interface HomeContextProps {
     feedTweets?: Tweet[];

@@ -1,19 +1,20 @@
 import {FC} from "react";
-import { useHomeContext } from "../../../contexts/home-context";
+import Sidebar from "./sidebar/sidebar";
 
 interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
-        const {feedTweets} = useHomeContext();
     return (
-        <>
-            {console.log("feedTweets => ", feedTweets)}
-            <div>
-                {feedTweets?.map((tweet) => (
-                    <div key={tweet?.tweetId ?? ""}>{tweet?.title ?? ""}</div>
-                ))}
-            </div>
-        </>
+        <div>
+            <section className="w-full flex flex-row justify-evenly flex-nowrap items-start relative min-h-screen p-0 m-0 bg-black text-gray-100">
+                <aside className="w-full md:w-1/5 fixed bottom-0 left-0 md:static border-r-[1px] border-gray-600">
+                    <Sidebar />
+                </aside>
+                <section className="w-full md:w-4/5">
+                    content
+                </section>
+            </section>
+        </div>
     );
 };
 

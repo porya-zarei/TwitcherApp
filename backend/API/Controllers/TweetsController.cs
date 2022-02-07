@@ -22,6 +22,7 @@ public class TweetsController : ControllerBase
     }
 
     [HttpGet("GetFeed/{userName}")]
+    [Authorize]
     public async Task<ActionResult<APIResult<List<OutTweet>>>> GetUserFeed(string userName)
     {
         var result = await _mediator.Send(new GetUserFeedTweetsQuery { UserName = userName });
