@@ -50,7 +50,7 @@ interface SendTweetProps {}
 const SendTweet: FC<SendTweetProps> = () => {
     return (
         <div className="p-2 h-36 flex justify-evenly items-center flex-nowrap flex-row mb-2 border-b-[1.5px] border-gray-400">
-            <div className="w-1/6 h-full flex justify-center items-start py-2">
+            <div className="flex-1 h-full flex justify-center items-start py-2">
                 <div className="rounded-full w-[50px] h-[50px] overflow-hidden">
                     <Image
                         src={defaultProfile}
@@ -61,7 +61,7 @@ const SendTweet: FC<SendTweetProps> = () => {
                     />
                 </div>
             </div>
-            <div className="w-5/6 h-full flex justify-center items-start content-between flex-wrap flex-row">
+            <div className="w-full h-full flex justify-center items-start content-between flex-wrap flex-row">
                 <div className="w-full h-auto p-2 border-b-[1px] border-gray-500">
                     <input
                         autoFocus={true}
@@ -71,7 +71,7 @@ const SendTweet: FC<SendTweetProps> = () => {
                     />
                 </div>
                 <div className="w-full mt-auto h-auto flex justify-between items-center flex-nowrap flex-row px-2">
-                    <div className="w-5/6">
+                    <div className="w-full">
                         {actions.map((action) => (
                             <button
                                 onClick={action.onClick}
@@ -83,7 +83,7 @@ const SendTweet: FC<SendTweetProps> = () => {
                             </button>
                         ))}
                     </div>
-                    <div className="w-1/6">
+                    <div className="flex-1">
                         <button type="button" className="border-none group bg-blue-700 p-2 text-lg rounded-full flex justify-center items-center overflow-hidden w-20 h-10">
                             <span className="transition-all group-hover:hidden font-bold">
                                 Tweet
