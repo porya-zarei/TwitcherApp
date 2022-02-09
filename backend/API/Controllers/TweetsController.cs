@@ -13,7 +13,7 @@ public class TweetsController : ControllerBase
 
     [HttpPost("Create")]
     [Authorize]
-    public async Task<ActionResult<APIResult<OutTweet>>> CreateTweet(CreateTweet createTweet)
+    public async Task<ActionResult<APIResult<OutTweet>>> CreateTweet([FromForm]CreateTweet createTweet)
     {
         var result = await _mediator.Send(new CreateTweetCommand { CreateTweet = createTweet });
         if (result.Ok)

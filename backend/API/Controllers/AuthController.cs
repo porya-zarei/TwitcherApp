@@ -57,12 +57,46 @@ public class AuthController : ControllerBase
         {
             var res = await _mediator.Send(new LoginUserCommand { LoginUser = loginUser });
 
-            var result = new APIResult<OutUser>
+            var pairs = new Dictionary<string, string>
+            {
+                { "UserName", res?.UserName ?? "" },
+                { "FullName", res?.FullName ?? "" }
+            };
+
+            var token = JwtHelper.GetToken(pairs, _jwtConfig);
+            if (res!=null) res.Token = token;
+            var result = new APIResult<OutUserWithToken>
             {
                 Result = res,
                 Status = 200,
                 Message = "LogedIn Successfuly"
             };
+
+            
+            
+            Response.Cookies.Append(GlobalConfigs.TokenKey, token,JwtHelper.GetCookieOptions());
+
+            return Ok(result);
+        }
+        catch (Exception err)
+        {
+            var result = new APIResult<User>
+            {
+                Status = 400,
+                Ok = false,
+                Message = err.Message,
+                Errors = err.Data.Values.Cast<string>().ToList()
+            };
+            return BadRequest(result);
+        }
+    }
+    [HttpGet("LoginWithToken")]
+    public async Task<ActionResult<APIResult<User>>> LoginUserWithToken()
+    {
+        try
+        {
+            var userName = User.FindFirst("UserName")?.Value ?? "";
+            var res = await _mediator.Send(new LoginUserWithTokenCommand { UserName = userName });
 
             var pairs = new Dictionary<string, string>
             {
@@ -71,8 +105,15 @@ public class AuthController : ControllerBase
             };
 
             var token = JwtHelper.GetToken(pairs, _jwtConfig);
-            
-            Response.Cookies.Append(GlobalConfigs.TokenKey, token,JwtHelper.GetCookieOptions());
+            if (res != null) res.Token = token;
+            var result = new APIResult<OutUserWithToken>
+            {
+                Result = res,
+                Status = 200,
+                Message = "LogedIn Successfuly"
+            };
+
+            Response.Cookies.Append(GlobalConfigs.TokenKey, token, JwtHelper.GetCookieOptions());
 
             return Ok(result);
         }

@@ -53,3 +53,29 @@ public record OutUser
         }:null;
     }
 }
+
+public record OutUserWithToken:OutUser
+{
+    public string Token { get; set; } = "";
+    public static OutUserWithToken? MapToOutUserWithToken(User? user)
+    {
+        return user != null ? new OutUserWithToken
+        {
+            UserId = user.UserId,
+            FullName = user.FullName,
+            BackgroundImage = user.BackgroundImage,
+            Status = user.Status,
+            Bio = user.Bio,
+            ProfileImage = user.ProfileImage,
+            BirthDay = user.BirthDay,
+            Email = user.Email,
+            FollowersCount = user.Followers!.Count,
+            FollowingsCount = user.Followings!.Count,
+            InterestedCategories = user.InterestedCategories!.ToList(),
+            JoinedAt = user.JoinedAt,
+            StatusText = user.StatusText,
+            UserName = user.UserName,
+            UserType = user.UserType
+        } : null;
+    }
+}

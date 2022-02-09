@@ -4,6 +4,7 @@ import {ReactNode, useState} from "react";
 import {Hydrate, QueryClient, QueryClientProvider} from "react-query";
 import MainContextProvider from "../contexts/main-context/main-context";
 import DefaultLayout from "../components/layouts/default-layout/layout";
+import UserContextProvider from "../contexts/user-context/user-context";
 
 const MyApp = ({Component, pageProps}: AppPropsWithLayout) => {
     const getLayout =
@@ -16,7 +17,13 @@ const MyApp = ({Component, pageProps}: AppPropsWithLayout) => {
         <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
                 <MainContextProvider>
-                    {getLayout(<Component {...pageProps} />)}
+                    <UserContextProvider
+                        initial={{
+                            user: pageProps?.user,
+                            token: pageProps?.token,
+                        }}>
+                        {getLayout(<Component {...pageProps} />)}
+                    </UserContextProvider>
                 </MainContextProvider>
             </Hydrate>
         </QueryClientProvider>

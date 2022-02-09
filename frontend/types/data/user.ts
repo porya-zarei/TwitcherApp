@@ -31,6 +31,10 @@ export interface User {
     statusText: string;
     userType: UserTypes;
     followersCount: number;
-    followingsCount:number;
+    followingsCount: number;
     interestedCategories: Category[];
 }
+
+export type PartialUser = Partial<User>;
+
+export type PartialUserWithToken = PartialUser & {token?: string};

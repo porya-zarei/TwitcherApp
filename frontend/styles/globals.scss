@@ -22,7 +22,7 @@ a {
 @layer components {
     .tweet-view-image-container {
         @apply w-full;
-        height: 450px;
+        // height: 450px;
         @apply overflow-hidden;
         @apply rounded-lg;
         @apply inline-block;

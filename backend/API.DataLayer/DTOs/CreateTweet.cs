@@ -3,13 +3,11 @@
 public class CreateTweet
 {
     public TweetTypes ReTweetType { get; set; } = TweetTypes.Tweet;
-
+    public string? Title { get; set; } = "";
     [Required]
-    public string? Title { get; set; }
-    [Required]
-    public string? Content { get; set; }
+    public string Content { get; set; } = "";
 
-    public IFormFileCollection? Images { get; set; }
+    public IFormFile[]? Images { get; set; }
     public IFormFile? Video { get; set; }
     public Guid? BaseTweetId { get; set; }
 

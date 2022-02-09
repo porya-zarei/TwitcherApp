@@ -31,6 +31,7 @@ const server_axios: AxiosInstance = axios.create({
         Accept: "application/json",
     },
     httpsAgent: new Agent({rejectUnauthorized: false}),
+    withCredentials: true,
 });
 
 server_axios.interceptors.response.use(

@@ -26,7 +26,7 @@ internal class CreateTweetCommandHandler : IRequestHandler<CreateTweetCommand, A
             User sender = new();
             Tweet baseTweet = new();
             List<string> hashtags = new();
-            if (request.CreateTweet.Images != null && request?.CreateTweet?.Images?.Count != 0)
+            if (request.CreateTweet.Images != null && request?.CreateTweet?.Images?.Length != 0)
             {
                 var res = await Uploader.UploadImages(request?.CreateTweet.Images, _env.WebRootPath);
                 if (res != null) imagesName.AddRange(res);

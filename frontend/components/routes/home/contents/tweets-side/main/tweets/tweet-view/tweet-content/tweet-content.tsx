@@ -6,7 +6,7 @@ interface TweetContentProps {
 
 const TweetContent: FC<TweetContentProps> = ({content}) => {
     return (
-        <div className="w-full flex justify-start items-center flex-wrap flex-row">
+        <div className="w-full flex justify-start items-center flex-wrap flex-row mb-2">
             <p>{content ?? ""}</p>
         </div>
     );

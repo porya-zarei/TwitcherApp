@@ -19,7 +19,7 @@ const TweetUserProfile: FC<TweetUserProfileProps> = ({
         <div className="flex justify-center items-start p-2">
             <div className="rounded-full w-[50px] h-[50px] overflow-hidden">
                 <Image
-                    src={profileImage ?? defaultProfile}
+                    src={profileImage || defaultProfile}
                     layout="intrinsic"
                     alt={alt}
                     width={width}

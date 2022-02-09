@@ -9,7 +9,7 @@ public class TweetsRepository:Repository<Tweet>,ITweetsRepository
 
     public List<OutTweet>? GetUserFeedTweets(User user)
     {
-        var res = _set.Select(x => OutTweet.MapToOutTweet(x)).ToList();
+        var res = _set.Include(t => t.Sender).Select(x => OutTweet.MapToOutTweet(x)).ToList();
         return res;
     }
 }

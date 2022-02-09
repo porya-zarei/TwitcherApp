@@ -7,9 +7,7 @@ public class Tweet
     public TweetTypes ReTweetType { get; set; } = TweetTypes.Tweet;
 
     public bool IsDeleted { get; set; } = false;
-
-    [Required]
-    public string Title { get; set; } = string.Empty;
+    public string? Title { get; set; } = string.Empty;
     [Required]
     public string Content { get; set; } = string.Empty;
 

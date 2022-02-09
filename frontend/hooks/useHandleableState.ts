@@ -1,4 +1,4 @@
-import {ChangeEventHandler, useCallback, useMemo, useState} from "react";
+import {ChangeEventHandler, memo, useCallback, useMemo, useState} from "react";
 type ST = string | number | boolean;
 
 interface useHandleableStateType<U> {
@@ -11,7 +11,6 @@ function useHandleableState<T = ST>(
     initialValue: T,
 ): useHandleableStateType<T> {
     const [state, setState] = useState<T>(initialValue);
-    console.log(state,typeof state,initialValue);
     const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
         (event) => {
             console.log(event.target.value);
@@ -29,7 +28,10 @@ function useHandleableState<T = ST>(
     );
     const handleUpdate = useCallback<(newState: ((ps: T) => T) | T) => void>(
         (newState) => {
-            if (typeof newState === typeof state || typeof newState === "function") {
+            if (
+                typeof newState === typeof state ||
+                typeof newState === "function"
+            ) {
                 setState(newState);
             } else {
                 throw new TypeError("type not supported");

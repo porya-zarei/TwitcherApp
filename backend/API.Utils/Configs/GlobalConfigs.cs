@@ -2,16 +2,16 @@
 
 public static class GlobalConfigs
 {
-    public const string ClientUrl = "http://localhost:3000";
+    public const string ClientUrl = "localhost:3000";
     public const string TokenKey = "token";
     public static CookieOptions CookieOptions(DateTime expireTime) => new()
     {
         Expires = expireTime,
         HttpOnly = false,
-        Secure = false,
-        IsEssential = false,
+        Secure = true,
+        IsEssential = true,
         Path = "/",
-        SameSite = SameSiteMode.Unspecified
+        SameSite = SameSiteMode.None
     };
 
 }

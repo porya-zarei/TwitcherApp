@@ -17,13 +17,13 @@ public class UsersRepository:Repository<User>,IUsersRepository
     {
         if (loginUser != null && loginUser.UserName != null)
         {
-            var user = await _set.FirstOrDefaultAsync(u => u.UserName == loginUser.UserName);
+            var user = await _set.Include(u => u.Followers).Include(u => u.Followings).FirstOrDefaultAsync(u => u.UserName == loginUser.UserName);
             if (user != null && user.Password == loginUser.Password) return user;
             else return null;
         }
         else if (loginUser != null && loginUser.Email != null)
         {
-            var user = await _set.FirstOrDefaultAsync(u => u.Email == loginUser.Email);
+            var user = await _set.Include(u => u.Followers).Include(u => u.Followings ).FirstOrDefaultAsync(u => u.Email == loginUser.Email);
             if (user != null && user.Password == loginUser.Password) return user;
             else return null;
         }
@@ -32,6 +32,6 @@ public class UsersRepository:Repository<User>,IUsersRepository
 
     public async Task<User?> GetUserWithUserName(string userName)
     {
-        return (await _set.FirstOrDefaultAsync(u => u.UserName == userName));
+        return (await _set.Include(u => u.Followers).Include(u => u.Followings).FirstOrDefaultAsync(u => u.UserName == userName));
     }
 }

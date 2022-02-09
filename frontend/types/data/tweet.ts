@@ -20,6 +20,13 @@ export interface Tweet {
     video: string;
 }
 
+export type PartialTweet = Partial<Tweet>;
+
+export interface ISendTweetData {
+    tweet?:FormData;
+    token?:string;
+}
+
 // {
 //     "tweetId": "3b328311-50d6-4a63-8297-b90e2b12cf84",
 //     "reTweetType": 0,

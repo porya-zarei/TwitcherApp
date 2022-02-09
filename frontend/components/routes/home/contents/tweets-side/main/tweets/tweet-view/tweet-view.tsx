@@ -13,7 +13,7 @@ const iconSize: number = 25;
 
 const TweetView: FC<TweetViewProps> = ({tweet}) => {
     return (
-        <article className="w-full flex justify-evenly items-start flex-nowrap flex-row border-b-[1px] border-slate-400 px-2 py-1">
+        <article className="w-full flex justify-evenly items-start flex-nowrap flex-row border-b-[1.2px] border-slate-400 px-2 py-1">
             <header className="flex-1 flex justify-center items-center flex-wrap flex-row">
                 <TweetUserProfile profileImage={tweet?.sender?.profileImage} />
             </header>
@@ -28,6 +28,11 @@ const TweetView: FC<TweetViewProps> = ({tweet}) => {
                     images={tweet.images}
                 />
                 <TweetActionButtons iconSize={iconSize} />
+                {/* {tweet && (
+                    <div className="w-full flex justify-center items-center">
+                        <TweetView tweet={tweet} />
+                    </div>
+                )} */}
             </main>
         </article>
     );

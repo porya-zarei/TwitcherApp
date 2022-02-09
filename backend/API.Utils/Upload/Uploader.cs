@@ -30,7 +30,7 @@ public class Uploader
         }
     }
 
-    public static async Task<List<string>?> UploadImages(IFormFileCollection? images, string webRootPath)
+    public static async Task<List<string>?> UploadImages(IFormFile[]? images, string webRootPath)
     {
         try
         {

@@ -1,7 +1,9 @@
 import Image from "next/image";
 import {FC} from "react";
 
+import defaultImage from "../../../../../../../assets/images/default-image.jpg";
 import defaultProfile from "../../../../../../../assets/images/default-profile.png";
+import { useHomeContext } from "../../../../../../../contexts/home-context/home-context";
 import { Tweet } from "../../../../../../../types/data/tweet";
 import { User } from "../../../../../../../types/data/user";
 import TweetView from "./tweet-view/tweet-view";
@@ -15,7 +17,7 @@ const fakeTweets: Partial<Tweet>[] = [
         content: "This is the first tweet",
         createdAt: new Date(),
         hashtags: ["#hashtag1", "#hashtag2"],
-        images: [defaultProfile.src],
+        images: [defaultImage.src],
         likesCount: 0,
         reTweetType: 0,
         sender: {
@@ -31,7 +33,7 @@ const fakeTweets: Partial<Tweet>[] = [
         content: "This is the first tweet",
         createdAt: new Date(),
         hashtags: ["#hashtag1", "#hashtag2"],
-        images: [defaultProfile.src],
+        images: [defaultImage.src],
         likesCount: 0,
         reTweetType: 0,
         sender: {
@@ -44,9 +46,10 @@ const fakeTweets: Partial<Tweet>[] = [
 ];
 
 const TweetsView: FC<TweetsViewProps> = () => {
+    const {feedTweets} = useHomeContext();
     return (
         <div className="w-full flex justify-center items-center content-start flex-wrap flex-row mb-20">
-            {fakeTweets.map((tweet) => (
+            {feedTweets?.map((tweet) => (
                 <TweetView key={tweet.tweetId} tweet={tweet} />
             ))}
         </div>
