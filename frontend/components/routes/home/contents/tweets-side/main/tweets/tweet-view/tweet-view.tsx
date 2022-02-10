@@ -28,11 +28,6 @@ const TweetView: FC<TweetViewProps> = ({tweet}) => {
                     images={tweet.images}
                 />
                 <TweetActionButtons iconSize={iconSize} />
-                {/* {tweet && (
-                    <div className="w-full flex justify-center items-center">
-                        <TweetView tweet={tweet} />
-                    </div>
-                )} */}
             </main>
         </article>
     );

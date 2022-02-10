@@ -19,6 +19,7 @@ import {
     ISendTweetData,
     TweetTypes,
 } from "../../../../../../../types/data/tweet";
+import Avatar from "../../../../../../core-ui/avatar/avatar";
 import SendTweetActionButtons from "./send-tweet-action-buttons/send-tweet-action-buttons";
 
 const actions = [
@@ -79,7 +80,7 @@ const SendTweet: FC<SendTweetProps> = () => {
             }
         }
         console.log(document.cookie);
-        console.log("tweet => ",tweet,formData.get("images"));
+        console.log("tweet => ", tweet, formData.get("images"));
         const data: ISendTweetData = {
             tweet: formData,
             token,
@@ -90,21 +91,16 @@ const SendTweet: FC<SendTweetProps> = () => {
         }
     };
     return (
-        <div className="p-2 h-36 flex justify-evenly items-center flex-nowrap flex-row mb-2 border-b-[1.5px] border-gray-400">
+        <div className="p-2 h-36 flex justify-evenly items-center flex-nowrap flex-row mb-2 border-b-[1.5px] border-secondary">
             <div className="flex-1 h-full flex justify-center items-start py-2">
-                <div className="rounded-full w-[50px] h-[50px] overflow-hidden">
-                    <Image
-                        src={user?.profileImage ?? defaultProfile}
-                        title={user?.fullName}
-                        layout="intrinsic"
-                        alt="user profile"
-                        width={50}
-                        height={50}
-                    />
-                </div>
+                <Avatar
+                    src={user?.profileImage ?? defaultProfile.src}
+                    layout="intrinsic"
+                    alt={user?.userName ?? "default profile"}
+                />
             </div>
             <div className="w-full h-full flex justify-center items-start content-between flex-wrap flex-row">
-                <div className="w-full h-auto p-2 border-b-[1px] border-gray-500">
+                <div className="w-full h-auto p-2 border-b-[1px] border-secondary">
                     <input
                         autoFocus={true}
                         className="w-full h-10 outline-none border-none bg-transparent text-2xl"
@@ -120,7 +116,7 @@ const SendTweet: FC<SendTweetProps> = () => {
                         <button
                             type="button"
                             onClick={sendTweet}
-                            className="border-none group bg-blue-700 p-2 text-lg rounded-full flex justify-center items-center overflow-hidden w-20 h-10">
+                            className="border-none group bg-primary text-slate-100 p-2 text-lg rounded-full flex justify-center items-center overflow-hidden w-20 h-10">
                             {isLoading ? (
                                 <span className="transition-all">
                                     <HiOutlineRefresh

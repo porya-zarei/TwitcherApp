@@ -27,7 +27,7 @@ const UserContextProvider: FC<UserContextProviderProps> = ({
 }) => {
     const u: PartialUser = {...(initial?.user ?? ({} as PartialUser))};
     const [user, setUser] = useState<PartialUser>({...u});
-    const [token, setToken] = useState<string>(initial?.token ?? "");
+    const [token, setToken] = useState<string>(String(initial?.token) || "");
     const changeUser: Dispatch<SetStateAction<PartialUser>> = useCallback(
         (value) => {
             setUser(value);

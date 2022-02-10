@@ -16,6 +16,7 @@ export interface Tweet {
     images: string[];
     likesCount: number;
     reTweetType: TweetTypes;
+    baseTweet: Tweet;
     sender: User;
     video: string;
 }
@@ -23,8 +24,8 @@ export interface Tweet {
 export type PartialTweet = Partial<Tweet>;
 
 export interface ISendTweetData {
-    tweet?:FormData;
-    token?:string;
+    tweet?: FormData;
+    token?: string;
 }
 
 // {

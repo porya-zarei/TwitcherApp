@@ -52,7 +52,7 @@ const LoginForm: FC<LoginFormProps> = () => {
                         type="text"
                         autoComplete="username"
                         required
-                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-secondary placeholder-secondary text-dark rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                         placeholder="Email or UserName"
                         value={email}
                         onChange={onEmailChange}
@@ -68,7 +68,7 @@ const LoginForm: FC<LoginFormProps> = () => {
                         type="password"
                         autoComplete="current-password"
                         required
-                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-light-gray placeholder-secondary text-dark rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                         placeholder="Password"
                         value={password}
                         onChange={onPasswordChange}
@@ -81,20 +81,20 @@ const LoginForm: FC<LoginFormProps> = () => {
                         id="remember-me"
                         name="remember-me"
                         type="checkbox"
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-primary focus:ring-primary border-light-gray rounded"
                         checked={rememberMe}
                         onChange={onRememberMeChange}
                     />
                     <label
                         htmlFor="remember-me"
-                        className="ml-2 block text-sm text-gray-900 dark:text-gray-200">
+                        className="ml-2 block text-sm text-dark dark:text-light-gray">
                         Remember me
                     </label>
                 </div>
                 <div className="text-sm">
                     <a
                         href="#"
-                        className="font-medium text-blue-600 hover:text-blue-500">
+                        className="font-medium text-primary hover:text-primary">
                         Forgot your password?
                     </a>
                 </div>
@@ -102,9 +102,9 @@ const LoginForm: FC<LoginFormProps> = () => {
             <div>
                 <button
                     type="submit"
-                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-light bg-primary hover:bg-dark-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                     <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <HiLockClosed className="h-5 w-5 text-blue-500 group-hover:text-blue-400" />
+                        <HiLockClosed className="h-5 w-5 text-light group-hover:text-light-gray" />
                     </span>
                     Login
                 </button>

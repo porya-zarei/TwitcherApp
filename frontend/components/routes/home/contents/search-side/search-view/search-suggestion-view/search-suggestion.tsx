@@ -26,14 +26,14 @@ const searchSuggestions: ISerachSuggestion[] = [
 const SearchSuggestionView: FC<SearchSuggestionViewProps> = () => {
     return (
         <div className="w-full flex justify-center items-center">
-            <div className="w-full flex justify-center items-center rounded-2xl bg-black overflow-hidden border-2 border-blue-900">
+            <div className="w-full flex justify-center items-center rounded-2xl bg-dark overflow-hidden border-2 border-primary">
                 <SimpleCard
                     icon={<HiOutlineCog size={20} />}
                     items={searchSuggestions}
                     title="Trends for you"
-                    containerClassName="bg-slate-700 bg-opacity-50 rounded-2xl overflow-hidden"
-                    iconButtonClassName="text-blue-600 p-2 mr-1"
-                    showMoreButtonClassName="px-2 py-3 hover:bg-slate-100 hover:bg-opacity-5 text-blue-500"
+                    containerClassName="bg-secondary bg-opacity-50 rounded-2xl overflow-hidden"
+                    iconButtonClassName="text-primary p-2 mr-1"
+                    showMoreButtonClassName="px-2 py-3 hover:bg-slate-100 hover:bg-opacity-5 text-primary"
                     listItemClassName="hover:bg-slate-100 hover:bg-opacity-5 p-2"
                     renderListItem={(suggestion) => (
                         <Link href={suggestion.url}>
@@ -50,10 +50,10 @@ const SearchSuggestionView: FC<SearchSuggestionViewProps> = () => {
                                     </div>
                                 </div>
                                 <div className="w-full h-full flex justify-center items-center content-center flex-wrap flex-row">
-                                    <span className="w-full font-bold text-opacity-75 text-slate-200">
+                                    <span className="w-full font-bold text-opacity-75 text-slate-900 dark:text-slate-100">
                                         {suggestion?.title ?? ""}
                                     </span>
-                                    <span className="w-full text-xs text-opacity-60 text-slate-300">
+                                    <span className="w-full text-xs text-opacity-60 text-slate-900 dark:text-slate-200">
                                         {suggestion?.userName ?? "0"} Tweets
                                     </span>
                                 </div>
@@ -61,7 +61,7 @@ const SearchSuggestionView: FC<SearchSuggestionViewProps> = () => {
                                     <button
                                         type="button"
                                         title="detail"
-                                        className="bg-transparent border-none text-opacity-60 text-slate-300 hover:text-blue-600">
+                                        className="bg-transparent border-none text-opacity-60 text-slate-900 dark:text-slate-200 hover:text-primary">
                                         <HiX size={20} />
                                     </button>
                                 </div>

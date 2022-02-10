@@ -15,8 +15,11 @@ public class OutTweet
     public List<string>? Hashtags { get; set; }
     public OutUser? Sender { get; set; }
 
+    public OutTweet? BaseTweet { get; set; }
+
     public static OutTweet MapToOutTweet(Tweet tweet)
     {
+        var haveBaseTweet = tweet.BaseTweet != null && tweet.BaseTweet.Content != null && tweet.BaseTweet.Content.Length > 0;
         return new OutTweet
         {
             TweetId = tweet.TweetId,
@@ -27,6 +30,7 @@ public class OutTweet
             Images = tweet.Images,
             LikesCount = tweet.LikesCount,
             ReTweetType = tweet.ReTweetType,
+            BaseTweet = haveBaseTweet ? MapToOutTweet(tweet.BaseTweet!) : null,
             Sender = OutUser.MapToOutUser(tweet.Sender),
             Video = tweet.Video,
         };

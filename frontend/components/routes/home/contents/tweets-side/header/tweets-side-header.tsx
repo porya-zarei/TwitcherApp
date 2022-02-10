@@ -5,7 +5,7 @@ interface TweetsSideHeaderProps {}
 
 const TweetsSideHeader: FC<TweetsSideHeaderProps> = () => {
     return (
-        <div className="w-full flex justify-between items-center flex-nowrap flex-row h-12 bg-black bg-opacity-90">
+        <div className="w-full flex justify-between items-center flex-nowrap flex-row h-12 bg-dark bg-opacity-90">
             <div className="px-3">
                 <h3 className="text-lg">Home</h3>
             </div>

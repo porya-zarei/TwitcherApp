@@ -7,7 +7,7 @@ interface SearchViewProps {}
 const SearchView: FC<SearchViewProps> = () => {
     return (
         <div className="w-full relative h-full flex justify-center items-center flex-nowrap flex-row">
-            <div className="w-full h-full flex justify-between items-center rounded-full bg-slate-600 bg-opacity-70 peer">
+            <div className="w-full h-full flex justify-between items-center rounded-full bg-secondary bg-opacity-70 peer">
                 <button
                     type="button"
                     title="search"

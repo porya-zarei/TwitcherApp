@@ -48,9 +48,9 @@ const FollowSuggestionView: FC<FollowSuggestionViewProps> = () => {
                 icon={<HiOutlineCog size={20} />}
                 items={SUGGESTIONS}
                 title="Trends for you"
-                containerClassName="bg-slate-700 bg-opacity-50 rounded-2xl overflow-hidden"
-                iconButtonClassName="text-blue-600 p-2 mr-1"
-                showMoreButtonClassName="px-2 py-3 hover:bg-slate-100 hover:bg-opacity-5 text-blue-500"
+                containerClassName="bg-secondary bg-opacity-50 rounded-2xl overflow-hidden"
+                iconButtonClassName="text-primary p-2 mr-1"
+                showMoreButtonClassName="px-2 py-3 hover:bg-slate-100 hover:bg-opacity-5 text-primary"
                 listItemClassName="hover:bg-slate-100 hover:bg-opacity-5 p-2"
                 renderListItem={(suggestion) => (
                     <Link href={suggestion?.url??""}>
@@ -67,10 +67,10 @@ const FollowSuggestionView: FC<FollowSuggestionViewProps> = () => {
                                 </div>
                             </div>
                             <div className="w-full h-full flex justify-center items-center content-center flex-wrap flex-row">
-                                <span className="w-full text-sm font-bold text-opacity-75 text-slate-200">
+                                <span className="w-full text-sm font-bold text-opacity-75 text-slate-900 dark:text-slate-100">
                                     {suggestion?.title ?? ""}
                                 </span>
-                                <span className="w-full text-xs text-opacity-60 text-slate-300">
+                                <span className="w-full text-xs text-opacity-60 text-slate-900 dark:text-slate-200">
                                     {suggestion?.userName ??""}
                                 </span>
                             </div>
@@ -78,7 +78,7 @@ const FollowSuggestionView: FC<FollowSuggestionViewProps> = () => {
                                 <button
                                     type="button"
                                     title="detail"
-                                    className="bg-transparent border-none text-sm font-bold text-black bg-slate-100 rounded-full px-3 py-1">
+                                    className="bg-transparent border-none text-sm font-bold dark:text-dark dark:bg-slate-100 text-slate-900 bg-dark rounded-full px-3 py-1">
                                     Follow
                                 </button>
                             </div>

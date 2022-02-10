@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {FC} from "react";
 import defaultProfile from "../../../../../../../../../assets/images/default-profile.png";
+import Avatar from "../../../../../../../../core-ui/avatar/avatar";
 
 interface TweetUserProfileProps {
     profileImage?: string;
@@ -17,15 +18,13 @@ const TweetUserProfile: FC<TweetUserProfileProps> = ({
 }) => {
     return (
         <div className="flex justify-center items-start p-2">
-            <div className="rounded-full w-[50px] h-[50px] overflow-hidden">
-                <Image
-                    src={profileImage || defaultProfile}
-                    layout="intrinsic"
-                    alt={alt}
-                    width={width}
-                    height={height}
-                />
-            </div>
+            <Avatar
+                src={profileImage ?? defaultProfile.src}
+                layout="intrinsic"
+                alt={alt}
+                height={height}
+                width={width}
+            />
         </div>
     );
 };

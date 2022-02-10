@@ -1,4 +1,5 @@
-import {Context, Dispatch, useContext, useReducer} from "react";
+import {useRouter} from "next/router";
+import {Context, Dispatch, useContext, useEffect, useReducer} from "react";
 import {createContext, FC, useMemo} from "react";
 import {Tweet} from "../../types/data/tweet";
 
@@ -45,6 +46,7 @@ const HomeContextProvider: FC<HomeContextProviderProps> = ({
     children,
     initial,
 }) => {
+    const router = useRouter();
     const initialForReducer: IHomeContextState = {
         feedTweets: initial.feedTweets ?? [],
     };
@@ -59,6 +61,12 @@ const HomeContextProvider: FC<HomeContextProviderProps> = ({
         }),
         [state, dispatch],
     );
+    useEffect(() => {
+        if (state.feedTweets.length === 0) {
+            router.push("/auth/login");
+        }
+    }, []);
+
     return (
         <HomeContext.Provider value={context}>{children}</HomeContext.Provider>
     );

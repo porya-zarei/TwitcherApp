@@ -1,5 +1,6 @@
 import type {NextPage} from "next";
 import Link from "next/link";
+import {useEffect, useRef} from "react";
 
 const IndexPage: NextPage = () => {
     return (

@@ -2,6 +2,8 @@
 public class GetUserFeedTweetsQuery : IRequest<APIResult<List<OutTweet>?>>
 {
     public string UserName { get; set; } = string.Empty;
+    public int PageNumber { get; set; } = 0;
+    public int ItemsPerPage { get; set; }
 }
 
 public class GetUserFeedTweetsQueryHandler : IRequestHandler<GetUserFeedTweetsQuery, APIResult<List<OutTweet>?>>
@@ -22,7 +24,7 @@ public class GetUserFeedTweetsQueryHandler : IRequestHandler<GetUserFeedTweetsQu
             var user = await _usersRepository.GetUserWithUserName(request.UserName);
             if (user != null)
             {
-                var res = _tweetsRepository.GetUserFeedTweets(user);
+                var res = _tweetsRepository.GetUserFeedTweets(user,request.ItemsPerPage,request.PageNumber);
                 result = new()
                 {
                     Result = res,
