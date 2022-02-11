@@ -16,6 +16,7 @@ global using API.DataLayer.Contexts;
 global using API.DataLayer.Models;
 global using API.DataLayer.Commands.Auth;
 global using API.DataLayer.Commands.Tweets;
+global using API.DataLayer.Commands.Users;
 global using API.DataLayer.Queries.Users;
 global using API.DataLayer.DTOs;
 global using API.Utils.Configs;

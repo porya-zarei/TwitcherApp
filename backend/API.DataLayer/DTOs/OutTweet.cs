@@ -6,7 +6,6 @@ public class OutTweet
     public TweetTypes ReTweetType { get; set; } = TweetTypes.Tweet;
     public string? Title { get; set; }
     public string? Content { get; set; }
-
     public List<string>? Images { get; set; }
     public string? Video { get; set; }
 

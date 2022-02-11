@@ -16,6 +16,6 @@ public class GetUsersQueryHandler:IRequestHandler<GetUsersQuery,List<OutUser>>
 
     public async Task<List<OutUser>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
-        return (await _repository.GetAllEntries()).Select(u => OutUser.MapToOutUser(u)).ToList();
+        return await _repository.GetAllUsers();
     }
 }

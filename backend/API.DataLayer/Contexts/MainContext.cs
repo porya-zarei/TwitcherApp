@@ -29,12 +29,12 @@ public class MainContext : DbContext
             .WithMany(c => c.Followers);
 
         modelBuilder.Entity<User>()
-            .HasMany(u => u.Followers);
-
-        modelBuilder.Entity<User>()
             .HasMany(u => u.Tweets)
             .WithOne(t => t.Sender)
             .HasForeignKey(t => t.SenderId);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Followers);
 
         modelBuilder.Entity<User>()
             .HasMany(u => u.Followings);

@@ -23,6 +23,8 @@ public class User
 
     public string Bio { get; set; } = string.Empty;
 
+    public string ConnectionId { get; set; } = "";
+
     public string? ProfileImage { get; set; } = string.Empty;
 
     public string? BackgroundImage { get; set; } = string.Empty;
@@ -34,11 +36,11 @@ public class User
 
     public UserTypes UserType { get; set; } = UserTypes.Bronze;
 
-    [JsonIgnore]
+    //[JsonIgnore]
     public ICollection<Tweet> Tweets { get; set; } = new List<Tweet>();
-    [JsonIgnore]
+    //[JsonIgnore]
     public ICollection<User>? Followings { get; set;} = new List<User>();
-    [JsonIgnore]
+    //[JsonIgnore]
     public ICollection<User>? Followers { get; set; } = new List<User>();
     public ICollection<Category>? InterestedCategories { get; set; } = new List<Category>();
 

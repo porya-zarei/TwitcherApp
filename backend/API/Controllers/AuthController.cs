@@ -72,8 +72,6 @@ public class AuthController : ControllerBase
                 Message = "LogedIn Successfuly"
             };
 
-            
-            
             Response.Cookies.Append(GlobalConfigs.TokenKey, token,JwtHelper.GetCookieOptions());
 
             return Ok(result);

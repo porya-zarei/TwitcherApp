@@ -25,4 +25,22 @@ public class UsersController : ControllerBase
         };
         return Ok(result);
     }
+
+    [HttpPost("Follow/{followingUserName}")]
+    [Authorize]
+    public async Task<ActionResult<APIResult<bool>>> FollowingUser(string followingUserName)
+    {
+        var followerUserName = User.FindFirst("UserName")?.Value??"";
+        var res = await _mediator.Send(new FollowingUserCommand { FollowerUserName = followerUserName , FollowingUserName = followingUserName});
+        return res;
+    }
+
+    [HttpPost("UnFollow/{followedUserName}")]
+    [Authorize]
+    public async Task<ActionResult<APIResult<bool>>> UnFollowingUser(string followedUserName)
+    {
+        var followerUserName = User.FindFirst("UserName")?.Value ?? "";
+        var res = await _mediator.Send(new UnFollowingUserCommand { FollowerUserName = followerUserName, FollowedUserName = followedUserName });
+        return res;
+    }
 }
