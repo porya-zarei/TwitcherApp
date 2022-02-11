@@ -11,6 +11,8 @@ global using System.Reflection;
 global using Microsoft.Extensions.Options;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.OpenApi.Models;
+global using Microsoft.AspNetCore.SignalR;
+
 
 global using API.DataLayer.Contexts;
 global using API.DataLayer.Models;

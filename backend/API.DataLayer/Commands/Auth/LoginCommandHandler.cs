@@ -2,7 +2,7 @@
 
 public class LoginUserCommand : IRequest<OutUserWithToken?>
 {
-    public LoginUser LoginUser { get; set; }
+    public LoginUser? LoginUser { get; set; }
 }
 
 public class LoginCommandHandler : IRequestHandler<LoginUserCommand, OutUserWithToken?>

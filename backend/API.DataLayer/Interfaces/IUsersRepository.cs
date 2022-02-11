@@ -8,7 +8,7 @@ namespace API.DataLayer.Interfaces;
 
 public interface IUsersRepository : IRepository<User>
 {
-    Task<User?> AuthenticateUser(LoginUser loginUser);
+    Task<User?> AuthenticateUser(LoginUser? loginUser);
     Task<bool> FollowingUser(string followerUserName, string followingUserName);
     Task<List<OutUser>> GetAllUsers();
     Task<User?> GetUserWithUserName(string userName);

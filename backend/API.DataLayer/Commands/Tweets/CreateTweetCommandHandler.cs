@@ -2,7 +2,7 @@
 
 public class CreateTweetCommand : IRequest<APIResult<OutTweet>>
 {
-    public CreateTweet CreateTweet { get; set; }
+    public CreateTweet? CreateTweet { get; set; }
 }
 
 internal class CreateTweetCommandHandler : IRequestHandler<CreateTweetCommand, APIResult<OutTweet>?>
@@ -26,12 +26,12 @@ internal class CreateTweetCommandHandler : IRequestHandler<CreateTweetCommand, A
             User sender = new();
             Tweet baseTweet = new();
             List<string> hashtags = new();
-            if (request.CreateTweet.Images != null && request?.CreateTweet?.Images?.Length != 0)
+            if (request?.CreateTweet?.Images != null && request?.CreateTweet?.Images?.Length != 0)
             {
                 var res = await Uploader.UploadImages(request?.CreateTweet.Images, _env.WebRootPath);
                 if (res != null) imagesName.AddRange(res);
             }
-            if (request?.CreateTweet.Video != null)
+            if (request?.CreateTweet?.Video != null)
             {
                 var res = await Uploader.UploadVideo(request?.CreateTweet?.Video, _env.WebRootPath);
                 if (res != null) videoName = res;
@@ -52,7 +52,7 @@ internal class CreateTweetCommandHandler : IRequestHandler<CreateTweetCommand, A
                 if (res != null) hashtags = res;
             }
 
-            var tweet = request?.CreateTweet.MapToTweet(sender, baseTweet, imagesName, videoName, hashtags);
+            var tweet = request?.CreateTweet?.MapToTweet(sender, baseTweet, imagesName, videoName, hashtags);
             if (tweet != null)
             {
                 var res = await _tweetsRepository.AddEntryAsync(tweet);

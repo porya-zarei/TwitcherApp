@@ -13,7 +13,7 @@ public class UsersRepository:Repository<User>,IUsersRepository
 
     }
 
-    public async Task<User?> AuthenticateUser(LoginUser loginUser)
+    public async Task<User?> AuthenticateUser(LoginUser? loginUser)
     {
         if (loginUser != null && loginUser.UserName != null)
         {
@@ -108,5 +108,15 @@ public class UsersRepository:Repository<User>,IUsersRepository
     {
         var isUnique = !(await _set.AnyAsync(u => u.UserName == userName));
         return isUnique;
+    }
+
+    public async Task<bool> SetConnectionId(string userName,string connectionId)
+    {
+        if (! string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(connectionId))
+        {
+            var user = await GetUserWithUserName(userName); 
+            if (user != null) user.ConnectionId = connectionId; return true;
+        }
+        return false;
     }
 }

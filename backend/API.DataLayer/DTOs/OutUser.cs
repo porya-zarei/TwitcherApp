@@ -4,18 +4,21 @@ public record OutUser
 {
     [Key]
     public Guid UserId { get; set; }
-    public string? FullName { get; set; }
+    public string? FirstName { get; set; } = "";
+    public string? LastName { get; set; } = "";
 
     [Required]
-    public string? UserName { get; set; }
+    public string? UserName { get; set; } = "";
 
     [Required]
     [EmailAddress(ErrorMessage = "please insert valid email address")]
-    public string? Email { get; set; }
+    public string? Email { get; set; } = "";
+
+    public string ConnectionId { get; set; } = "";
 
     public DateOnly? BirthDay { get; set; }
 
-    public string Bio { get; set; } = string.Empty;
+    public string Bio { get; set; } = "";
 
     public string? ProfileImage { get; set; }
 
@@ -36,7 +39,9 @@ public record OutUser
         return user!=null? new OutUser
         {
             UserId = user.UserId,
-            FullName = user.FullName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            ConnectionId = user.ConnectionId,
             BackgroundImage = user.BackgroundImage,
             Status = user.Status,
             Bio = user.Bio,
@@ -62,7 +67,9 @@ public record OutUserWithToken:OutUser
         return user != null ? new OutUserWithToken
         {
             UserId = user.UserId,
-            FullName = user.FullName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            ConnectionId = user.ConnectionId,
             BackgroundImage = user.BackgroundImage,
             Status = user.Status,
             Bio = user.Bio,

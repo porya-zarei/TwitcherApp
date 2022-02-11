@@ -4,30 +4,31 @@ public class User
 {
     [Key]
     public Guid UserId { get; set; }
-    public string? FullName { get; set; } = string.Empty;
+    public string? FirstName { get; set; } = "";
+    public string? LastName { get; set; } = "";
 
     [Required]
-    public string? UserName { get; set; } = string.Empty;
+    public string? UserName { get; set; } = "";
 
     [Required]
     [MinLength(8)]
-    public string? Password { get; set; } = string.Empty;
+    public string? Password { get; set; } = "";
 
     [Required]
     [EmailAddress(ErrorMessage = "please insert valid email address")]
-    public string? Email { get; set; } = string.Empty;
+    public string? Email { get; set; } = "";
 
-    public string? PhoneNumber { get; set; } = string.Empty;
+    public string? PhoneNumber { get; set; } = "";
 
     public DateOnly? BirthDay { get; set; }
 
-    public string Bio { get; set; } = string.Empty;
+    public string Bio { get; set; } = "";
 
     public string ConnectionId { get; set; } = "";
 
-    public string? ProfileImage { get; set; } = string.Empty;
+    public string? ProfileImage { get; set; } = "";
 
-    public string? BackgroundImage { get; set; } = string.Empty;
+    public string? BackgroundImage { get; set; } = "";
 
     public UserStatus? Status { get; set; } = UserStatus.Happy;
 

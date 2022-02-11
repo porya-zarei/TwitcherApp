@@ -14,32 +14,36 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("Register")]
-    public async Task<ActionResult<APIResult<User>>> RegisterUser(RegisterUser registerUser)
+    public async Task<ActionResult<APIResult<OutUserWithToken?>>> RegisterUser(RegisterUser registerUser)
     {
         try
         {
             var res = await _mediator.Send(new RegisterUserCommand { RegisterUser = registerUser });
-            var result = new APIResult<OutUser>
+
+            var pairs = new Dictionary<string, string>
+            {
+                { "UserName", res?.UserName ?? "" },
+                { "FullName", $"{res?.FirstName} {res?.LastName}" }
+            };
+
+            var token = JwtHelper.GetToken(pairs, _jwtConfig);
+
+            if (res != null) res.Token = token;
+
+            var result = new APIResult<OutUserWithToken?>
             {
                 Result = res,
                 Status = 201,
                 Message = "Created Successfuly"
             };
 
-            var pairs = new Dictionary<string, string>
-            {
-                { "UserName", res?.UserName ?? "" },
-                { "FullName", res?.FullName ?? "" }
-            };
-
-            var token = JwtHelper.GetToken(pairs, _jwtConfig);
-
             Response.Cookies.Append(GlobalConfigs.TokenKey, token);
+
             return Created("api/Auth/RegisterUser", result);
         }
         catch (Exception err)
         {
-            var result = new APIResult<User>
+            var result = new APIResult<OutUserWithToken?>
             {
                 Status = 400,
                 Ok = false,
@@ -51,7 +55,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("Login")]
-    public async Task<ActionResult<APIResult<User>>> LoginUser(LoginUser loginUser)
+    public async Task<ActionResult<APIResult<OutUserWithToken?>>> LoginUser(LoginUser loginUser)
     {
         try
         {
@@ -60,12 +64,12 @@ public class AuthController : ControllerBase
             var pairs = new Dictionary<string, string>
             {
                 { "UserName", res?.UserName ?? "" },
-                { "FullName", res?.FullName ?? "" }
+                { "FullName", $"{res?.FirstName} {res?.LastName}" }
             };
 
             var token = JwtHelper.GetToken(pairs, _jwtConfig);
             if (res!=null) res.Token = token;
-            var result = new APIResult<OutUserWithToken>
+            var result = new APIResult<OutUserWithToken?>
             {
                 Result = res,
                 Status = 200,
@@ -78,7 +82,7 @@ public class AuthController : ControllerBase
         }
         catch (Exception err)
         {
-            var result = new APIResult<User>
+            var result = new APIResult<OutUserWithToken?>
             {
                 Status = 400,
                 Ok = false,
@@ -89,7 +93,7 @@ public class AuthController : ControllerBase
         }
     }
     [HttpGet("LoginWithToken")]
-    public async Task<ActionResult<APIResult<User>>> LoginUserWithToken()
+    public async Task<ActionResult<APIResult<OutUserWithToken?>>> LoginUserWithToken()
     {
         try
         {
@@ -99,12 +103,12 @@ public class AuthController : ControllerBase
             var pairs = new Dictionary<string, string>
             {
                 { "UserName", res?.UserName ?? "" },
-                { "FullName", res?.FullName ?? "" }
+                { "FullName", $"{res?.FirstName} {res?.LastName}" }
             };
 
             var token = JwtHelper.GetToken(pairs, _jwtConfig);
             if (res != null) res.Token = token;
-            var result = new APIResult<OutUserWithToken>
+            var result = new APIResult<OutUserWithToken?>
             {
                 Result = res,
                 Status = 200,
@@ -117,7 +121,7 @@ public class AuthController : ControllerBase
         }
         catch (Exception err)
         {
-            var result = new APIResult<User>
+            var result = new APIResult<OutUserWithToken?>
             {
                 Status = 400,
                 Ok = false,
