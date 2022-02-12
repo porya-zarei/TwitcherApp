@@ -23,11 +23,18 @@ const TweetView: FC<TweetViewProps> = ({tweet}) => {
                     userName={tweet?.sender?.userName}
                 />
                 <TweetContent content={tweet?.content ?? ""} />
-                <TweetImages
-                    alt={tweet.title ?? tweet.content ?? ""}
-                    images={tweet.images}
-                />
-                <TweetActionButtons iconSize={iconSize} />
+                {tweet?.images && tweet?.images?.length > 0 && (
+                    <TweetImages
+                        alt={tweet.title ?? tweet.content ?? ""}
+                        images={tweet.images}
+                    />
+                )}
+                <TweetActionButtons tweet={tweet} iconSize={iconSize} />
+                {tweet.baseTweet && (
+                    <div className="w-full flex justify-center items-center border-t-2 border-secondary">
+                        <TweetView tweet={tweet.baseTweet} />
+                    </div>
+                )}
             </main>
         </article>
     );

@@ -1,7 +1,9 @@
 import {useRouter} from "next/router";
 import {Context, Dispatch, useContext, useEffect, useReducer} from "react";
 import {createContext, FC, useMemo} from "react";
-import {Tweet} from "../../types/data/tweet";
+import { ApiResult } from "../../types/data/api-result";
+import {PartialTweet, Tweet} from "../../types/data/tweet";
+import {useUserContext} from "../user-context/user-context";
 
 interface HomeContextProps {
     feedTweets?: Tweet[];
@@ -20,13 +22,16 @@ interface IHomeContextState {
     feedTweets: Tweet[];
 }
 
-enum HomeContextActionTypes {
-    SET_FEED_TWEETS = "SET_FEED_TWEETS",
-    UPDATE_FEED_TWEETS = "UPDATE_FEED_TWEETS",
+interface IActionTypes {
+    type:
+        | "SET_FEED_TWEETS"
+        | "UPDATE_FEED_TWEETS"
+        | "ADD_FEED_TWEET"
+        | "REMOVE_FEED_TWEET";
 }
 
 interface IHomeContextAction {
-    type: keyof typeof HomeContextActionTypes;
+    type: IActionTypes["type"];
     payload: any;
 }
 
@@ -35,8 +40,12 @@ const homeContextReducers = (
     action: IHomeContextAction,
 ) => {
     switch (action.type) {
-        case HomeContextActionTypes.SET_FEED_TWEETS:
+        case "SET_FEED_TWEETS":
             return {...state, feedTweets: action.payload as Tweet[]};
+        case "ADD_FEED_TWEET":
+            const feeds = [...state.feedTweets];
+            feeds.unshift(action.payload as Tweet);
+            return {...state, feedTweets: [...feeds]};
         default:
             return state;
     }
@@ -47,6 +56,7 @@ const HomeContextProvider: FC<HomeContextProviderProps> = ({
     initial,
 }) => {
     const router = useRouter();
+    const {connection} = useUserContext();
     const initialForReducer: IHomeContextState = {
         feedTweets: initial.feedTweets ?? [],
     };
@@ -66,6 +76,17 @@ const HomeContextProvider: FC<HomeContextProviderProps> = ({
             router.push("/auth/login");
         }
     }, []);
+
+    useEffect(() => {
+        if (connection) {
+            connection?.on?.("NewTweetArrived", (tweet: ApiResult<PartialTweet>) => {
+                dispatch({
+                    type: "ADD_FEED_TWEET",
+                    payload: tweet.result,
+                });
+            });
+        }
+    }, [connection]);
 
     return (
         <HomeContext.Provider value={context}>{children}</HomeContext.Provider>

@@ -12,13 +12,14 @@ global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Hosting.Builder;
 global using Microsoft.AspNetCore.WebUtilities;
 global using System.Text.Json.Serialization;
-
+global using Microsoft.AspNetCore.SignalR;
 
 global using API.DataLayer.Models;
 global using API.DataLayer.Interfaces;
 global using API.DataLayer.Services;
 global using API.DataLayer.Contexts;
 global using API.DataLayer.DTOs;
+global using API.DataLayer.Hubs.Users;
 
 global using API.Utils.Upload;
 global using API.Utils;

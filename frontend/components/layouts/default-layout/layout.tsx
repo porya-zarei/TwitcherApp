@@ -1,4 +1,5 @@
 import {FC} from "react";
+import { ToastContainer } from "react-toastify";
 import FooterLayout from "./footer/footer-layout";
 import HeaderLayout from "./header/header-layout";
 import MainLayout from "./main/main-layout";
@@ -12,6 +13,7 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({children}) => {
             <MetaLayout />
             <HeaderLayout />
             <MainLayout>{children}</MainLayout>
+            <ToastContainer/>
             <FooterLayout />
         </div>
     );

@@ -9,11 +9,13 @@ internal class CreateTweetCommandHandler : IRequestHandler<CreateTweetCommand, A
 {
     private readonly ITweetsRepository _tweetsRepository;
     private readonly IUsersRepository _usersRepository;
+    private readonly IHubContext<UsersHub> _usersHub;
     private readonly IHostingEnvironment _env;
-    public CreateTweetCommandHandler(MainContext context,IHostingEnvironment env)
+    public CreateTweetCommandHandler(MainContext context,IHubContext<UsersHub> usersHub,IHostingEnvironment env)
     {
         _tweetsRepository = new TweetsRepository(context);
         _usersRepository = new UsersRepository(context);
+        _usersHub = usersHub;
         _env = env;
     }
     public async Task<APIResult<OutTweet>?> Handle(CreateTweetCommand request, CancellationToken cancellationToken)
@@ -56,14 +58,16 @@ internal class CreateTweetCommandHandler : IRequestHandler<CreateTweetCommand, A
             if (tweet != null)
             {
                 var res = await _tweetsRepository.AddEntryAsync(tweet);
+                if(!baseTweet.IsNull() && !res.IsNull()) await _tweetsRepository.AddReplyToTweet(baseTweet, res);
                 if (res != null)
                 {
-                    var outTweet = OutTweet.MapToOutTweet(tweet);
+                    var outTweet = OutTweet.MapToOutTweet(res);
                     result = new()
                     {
                         Result = outTweet,
                         Message = "Created Successfuly"
                     };
+                    await _usersHub.Clients.All.SendAsync("NewTweetArrived", result);
                     return result;
                 }
 

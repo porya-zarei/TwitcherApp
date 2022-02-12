@@ -1,4 +1,6 @@
 import "../styles/globals.scss";
+import "react-toastify/dist/ReactToastify.css";
+
 import {AppPropsWithLayout} from "../types/pages";
 import {ReactNode, useState} from "react";
 import {Hydrate, QueryClient, QueryClientProvider} from "react-query";

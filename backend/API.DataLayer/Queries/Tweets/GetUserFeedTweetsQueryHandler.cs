@@ -24,7 +24,7 @@ public class GetUserFeedTweetsQueryHandler : IRequestHandler<GetUserFeedTweetsQu
             var user = await _usersRepository.GetUserWithUserName(request.UserName);
             if (user != null)
             {
-                var res = _tweetsRepository.GetUserFeedTweets(user,request.ItemsPerPage,request.PageNumber);
+                var res = await _tweetsRepository.GetUserFeedTweets(user,request.ItemsPerPage,request.PageNumber);
                 result = new()
                 {
                     Result = res,

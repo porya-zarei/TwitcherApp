@@ -1,16 +1,33 @@
-import { FC } from "react";
-import { HiOutlineChatAlt2, HiOutlineRefresh, HiOutlineThumbUp, HiOutlineUpload } from "react-icons/hi";
+import {FC} from "react";
+import {
+    HiOutlineChatAlt2,
+    HiOutlineRefresh,
+    HiOutlineThumbUp,
+    HiOutlineUpload,
+} from "react-icons/hi";
+import {useTweetsSideContext} from "../../../../../../../../../contexts/tweets-side-context/tweets-side-context";
+import {PartialTweet} from "../../../../../../../../../types/data/tweet";
 
 interface TweetActionButtonsProps {
     iconSize?: number;
+    tweet?: PartialTweet;
 }
- 
-const TweetActionButtons: FC<TweetActionButtonsProps> = ({iconSize=20}) => {
+
+const TweetActionButtons: FC<TweetActionButtonsProps> = ({
+    iconSize = 20,
+    tweet,
+}) => {
+    const {setShowReplyDialog, setBaseTweet} = useTweetsSideContext();
+    const handleReplyClick = () => {
+        setShowReplyDialog?.(true);
+        tweet && setBaseTweet?.(tweet);
+    };
     return (
         <div className="w-full flex justify-between items-center flex-nowrap flex-row my-3">
             <button
                 type="button"
                 title="reply"
+                onClick={handleReplyClick}
                 className="inline-flex justify-between items-center border-none bg-transparent text-slate-300">
                 <span className="mx-1">
                     <HiOutlineChatAlt2 size={iconSize} />
@@ -45,6 +62,6 @@ const TweetActionButtons: FC<TweetActionButtonsProps> = ({iconSize=20}) => {
             </button>
         </div>
     );
-}
- 
+};
+
 export default TweetActionButtons;

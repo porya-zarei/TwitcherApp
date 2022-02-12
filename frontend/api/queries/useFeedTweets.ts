@@ -24,7 +24,6 @@ export const getFeedTweets = (
                     },
                 );
             data = response.data;
-            console.log("data in get feed => ", data);
             return data;
         } catch (error: any) {
             console.log(error);
@@ -42,6 +41,7 @@ export const getFeedTweets = (
 
 export const useFeedTweets = (
     userName: string,
+    token: string,
 ): UseQueryResult<AxiosResponse<ApiResult<Tweet[]>>> => {
-    return useQuery(["feedTweets", userName], getFeedTweets(userName));
+    return useQuery(["feedTweets", userName], getFeedTweets(userName,token));
 };

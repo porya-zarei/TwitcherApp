@@ -1,10 +1,10 @@
 import axios, {AxiosInstance} from "axios";
 import {Agent} from "https";
-import {baseURL} from "../configs/globals";
-import {getCookieValueClient} from "../utils/cookies-helpers";
+import {apiUrl} from "../configs/globals";
+// import {getCookieValueClient} from "../utils/cookies-helpers";
 
 const client_axios: AxiosInstance = axios.create({
-    baseURL: baseURL,
+    baseURL: apiUrl,
     headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -25,7 +25,7 @@ const client_axios: AxiosInstance = axios.create({
 // );
 
 const server_axios: AxiosInstance = axios.create({
-    baseURL: baseURL,
+    baseURL: apiUrl,
     headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

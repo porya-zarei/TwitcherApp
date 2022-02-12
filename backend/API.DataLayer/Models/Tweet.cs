@@ -27,6 +27,8 @@ public class Tweet
     [JsonIgnore]
     public ICollection<Tweet>? Replies { get; set; } =  new List<Tweet>();
 
+    public bool IsNull() => string.IsNullOrEmpty(Content);
+
 }
 
 public enum TweetTypes

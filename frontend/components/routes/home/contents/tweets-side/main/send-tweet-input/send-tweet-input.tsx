@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {FC, useState} from "react";
 import {
     HiOutlinePhotograph,
@@ -13,6 +12,7 @@ import {
 import {useSendTweet} from "../../../../../../../api/mutations/useSendTweet";
 
 import defaultProfile from "../../../../../../../assets/images/default-profile.png";
+import { useTweetsSideContext } from "../../../../../../../contexts/tweets-side-context/tweets-side-context";
 import {useUserContext} from "../../../../../../../contexts/user-context/user-context";
 import useHandleableState from "../../../../../../../hooks/useHandleableState";
 import {
@@ -20,46 +20,22 @@ import {
     TweetTypes,
 } from "../../../../../../../types/data/tweet";
 import Avatar from "../../../../../../core-ui/avatar/avatar";
-import SendTweetActionButtons from "./send-tweet-action-buttons/send-tweet-action-buttons";
+import {
+    SendICon,
+    SendIconLoading,
+} from "../../../../../../core-ui/common/common-icons";
+import SendTweetActionButtons from "../send-tweet-action-buttons/send-tweet-action-buttons";
 
-const actions = [
-    {
-        icon: <HiOutlinePhotograph size={23} />,
-        onClick: () => {
-            const inputElement = document.createElement("input");
-        },
-        name: "add photo",
-    },
-    {
-        icon: <HiOutlineCalendar size={23} />,
-        onClick: () => {},
-        name: "add event",
-    },
-    {
-        icon: <HiOutlineFilm size={23} />,
-        onClick: () => {},
-        name: "add video",
-    },
-    {
-        icon: <HiOutlineEmojiHappy size={23} />,
-        onClick: () => {},
-        name: "add emoji",
-    },
-    {
-        icon: <HiOutlineLocationMarker size={23} />,
-        onClick: () => {},
-        name: "add location",
-    },
-    {
-        icon: <HiOutlineChartBar size={23} />,
-        onClick: () => {},
-        name: "add poll",
-    },
-];
+interface SendTweetProps {
+    sendType?: TweetTypes;
+    baseTweetId?: string;
+}
 
-interface SendTweetProps {}
-
-const SendTweet: FC<SendTweetProps> = () => {
+const SendTweet: FC<SendTweetProps> = ({
+    sendType = TweetTypes.Tweet,
+    baseTweetId,
+}) => {
+    const {setShowReplyDialog} = useTweetsSideContext();
     const {mutateAsync, isLoading} = useSendTweet();
     const {user, token} = useUserContext();
     const [images, setImages] = useState<File[]>([] as File[]);
@@ -70,8 +46,9 @@ const SendTweet: FC<SendTweetProps> = () => {
             content: tweetText,
             title: tweetText,
             images,
-            reTweetType: TweetTypes.Tweet,
+            reTweetType: sendType,
             senderUserName: user?.userName ?? "",
+            baseTweetId: baseTweetId || "",
         };
         const formData: FormData = new FormData();
         for (const key in tweet) {
@@ -88,10 +65,11 @@ const SendTweet: FC<SendTweetProps> = () => {
         const response = await mutateAsync(data);
         if (response?.ok && response?.result) {
             console.log("result in create tweet => ", response?.result);
+            setShowReplyDialog?.(false);
         }
     };
     return (
-        <div className="p-2 h-36 flex justify-evenly items-center flex-nowrap flex-row mb-2 border-b-[1.5px] border-secondary">
+        <div className="w-full p-2 h-36 flex justify-evenly items-center flex-nowrap flex-row mb-2 border-b-[1.5px] border-secondary">
             <div className="flex-1 h-full flex justify-center items-start py-2">
                 <Avatar
                     src={user?.profileImage ?? defaultProfile.src}
@@ -118,23 +96,13 @@ const SendTweet: FC<SendTweetProps> = () => {
                             onClick={sendTweet}
                             className="border-none group bg-primary text-slate-100 p-2 text-lg rounded-full flex justify-center items-center overflow-hidden w-20 h-10">
                             {isLoading ? (
-                                <span className="transition-all">
-                                    <HiOutlineRefresh
-                                        size={20}
-                                        className="animate-spin"
-                                    />
-                                </span>
+                                <SendIconLoading />
                             ) : (
                                 <>
                                     <span className="transition-all group-hover:hidden font-bold">
                                         Tweet
                                     </span>
-                                    <span className="hidden transition-all translate-x-[200%] group-hover:block group-hover:translate-x-0 animate-pulse">
-                                        <HiPaperAirplane
-                                            size={20}
-                                            className="transition-all rotate-90"
-                                        />
-                                    </span>
+                                    <SendICon />
                                 </>
                             )}
                         </button>

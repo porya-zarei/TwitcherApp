@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, FC, SetStateAction, useRef } from "react";
+import {ChangeEvent, Dispatch, FC, SetStateAction, useRef} from "react";
 import {
     HiOutlinePhotograph,
     HiOutlineCalendar,
@@ -13,17 +13,19 @@ interface SendTweetActionButtonsProps {
     setImages?: Dispatch<SetStateAction<File[]>>;
 }
 
-const SendTweetActionButtons: FC<SendTweetActionButtonsProps> = ({setImages}) => {
+const SendTweetActionButtons: FC<SendTweetActionButtonsProps> = ({
+    setImages,
+}) => {
     const imageInputRef = useRef<HTMLInputElement>(null);
     const handleAddImage = () => {
         imageInputRef?.current?.click();
-    }
+    };
     const handleChangeImage = (event: ChangeEvent<HTMLInputElement>) => {
         if (event?.target?.files && setImages) {
-            const images:File[] = Array.from(event.target.files);
+            const images: File[] = Array.from(event.target.files);
             setImages(images);
         }
-    }
+    };
     return (
         <div className="w-full">
             <button
@@ -32,7 +34,15 @@ const SendTweetActionButtons: FC<SendTweetActionButtonsProps> = ({setImages}) =>
                 className="border-none bg-transparent text-primary mx-1"
                 title={"add photo"}>
                 <HiOutlinePhotograph size={23} />
-                <input className="hidden" hidden={true} type="file" ref={imageInputRef} multiple={true} accept="image/jpeg, image/png" onChange={handleChangeImage} />
+                <input
+                    className="hidden"
+                    hidden={true}
+                    type="file"
+                    ref={imageInputRef}
+                    multiple={true}
+                    accept="image/jpeg, image/png"
+                    onChange={handleChangeImage}
+                />
             </button>
             <button
                 onClick={() => {}}
@@ -71,6 +81,6 @@ const SendTweetActionButtons: FC<SendTweetActionButtonsProps> = ({setImages}) =>
             </button>
         </div>
     );
-}
- 
+};
+
 export default SendTweetActionButtons;

@@ -7,6 +7,7 @@ builder.Services.AddControllers().AddJsonOptions( op =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddRouting();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Twitcher API", Version = "v1" });
@@ -71,6 +72,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddSignalR();
+
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());//Assembly.GetExecutingAssembly()
 
 var app = builder.Build();
@@ -86,11 +89,15 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseRouting();
 app.UseCors("ClientPermission");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-
-app.MapControllers();
+app.UseEndpoints(endpoints => {
+    endpoints.MapControllers();
+    endpoints.MapHub<UsersHub>("/hubs/users");
+});
 
 app.Run();

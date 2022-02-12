@@ -1,4 +1,4 @@
-﻿namespace API.Hubs.Users;
+﻿namespace API.DataLayer.Hubs.Users;
 
 public class UsersHub:Hub
 {
