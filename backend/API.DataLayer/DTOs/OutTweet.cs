@@ -35,3 +35,28 @@ public class OutTweet
         };
     }
 }
+
+public class FullOutTweet:OutTweet
+{
+    public List<OutTweet> Replies { get; set; } = new List<OutTweet>();
+
+    public static FullOutTweet MapToOutTweetWithReplies(Tweet tweet)
+    {
+        var haveBaseTweet = tweet.BaseTweet != null && tweet.BaseTweet.Content != null && tweet.BaseTweet.Content.Length > 0;
+        return new FullOutTweet
+        {
+            TweetId = tweet.TweetId,
+            Title = tweet.Title,
+            Content = tweet.Content,
+            CreatedAt = tweet.CreatedAt,
+            Hashtags = tweet.Hashtags,
+            Images = tweet.Images,
+            LikesCount = tweet.LikesCount,
+            ReTweetType = tweet.ReTweetType,
+            BaseTweet = haveBaseTweet ? MapToOutTweet(tweet.BaseTweet!) : null,
+            Sender = OutUser.MapToOutUser(tweet.Sender),
+            Video = tweet.Video,
+            Replies = tweet.Replies != null ? tweet.Replies.Select( t => MapToOutTweet(t)).ToList() : new List<OutTweet>() { }
+        };
+    }
+}

@@ -14,6 +14,9 @@ const IndexPage: NextPage = () => {
             <Link href={"/auth/register/"}>
                 <a>register page</a>
             </Link>
+            <Link href={"/tweets/b65816e8-6a22-4bdd-b088-9cd36ab5e96f"}>
+                <a>tweets</a>
+            </Link>
         </div>
     );
 };

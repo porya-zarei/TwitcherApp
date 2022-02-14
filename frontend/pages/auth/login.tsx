@@ -1,5 +1,5 @@
 import { FC } from "react";
-import LoginView from "../../components/routes/auth/login/login-view";
+import LoginRoute from "../../components/routes/auth/login/login-route";
 
 interface LoginPageProps {
     
@@ -8,7 +8,7 @@ interface LoginPageProps {
 const LoginPage: FC<LoginPageProps> = () => {
     return ( 
         <section className="w-full flex justify-center items-center">
-            <LoginView/>
+            <LoginRoute/>
         </section>
      );
 }

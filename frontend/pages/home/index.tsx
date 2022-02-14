@@ -3,7 +3,7 @@ import {dehydrate, DehydratedState, QueryClient} from "react-query";
 import {handleLoginWithToken} from "../../api/mutations/useLogin";
 import {getQueryClient} from "../../api/prefetch/prefetchData";
 import {getFeedTweets} from "../../api/queries/useFeedTweets";
-import Home from "../../components/routes/home/home";
+import HomeRoute from "../../components/routes/home/home-route";
 import HomeContextProvider from "../../contexts/home-context/home-context";
 import {Tweet} from "../../types/data/tweet";
 import {PartialUserWithToken} from "../../types/data/user";
@@ -21,7 +21,7 @@ interface HomePageProps {
 const HomePage: NextPage<HomePageProps> = ({feedTweets}) => {
     return (
         <HomeContextProvider initial={{feedTweets}}>
-            <Home />
+            <HomeRoute />
         </HomeContextProvider>
     );
 };
@@ -29,7 +29,7 @@ const HomePage: NextPage<HomePageProps> = ({feedTweets}) => {
 export default HomePage;
 
 export const getServerSideProps: GetServerSideProps<HomePageProps> = async ({
-    req,
+    req,res
 }) => {
     let token = getCookieValueServer(req as NextApiRequest, "token") ?? "";
     console.log("token", token);
@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async ({
             decodeToken<{UserName: string; FullName: string}>(token);
         const userName: string = decodedToken?.UserName || "";
         const {result: feedTweets} = await getFeedTweets(userName, token)();
-        const queryClient: QueryClient = getQueryClient({
+        const queryClient: QueryClient = await getQueryClient({
             feedTweetsData: {
                 tweets: feedTweets,
                 userName: userName,
@@ -57,7 +57,14 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async ({
             },
         };
     } else {
-        const queryClient: QueryClient = getQueryClient();
+
+        res.writeHead(302, {
+            Location: "/auth/login",
+        });
+        res.end();
+
+        const queryClient: QueryClient = await getQueryClient();
+        
         return {
             props: {
                 dehydratedState: dehydrate(queryClient),

@@ -29,4 +29,13 @@ public class TweetsController : ControllerBase
         if (result.Ok) return Ok(result);
         return BadRequest(result);
     }
+
+    [HttpGet("GetFullTweet/{tweetId}")]
+    [Authorize]
+    public async Task<ActionResult<FullOutTweet?>> GetFullTweet(Guid tweetId)
+    {
+        var result = await _mediator.Send(new GetFullTweetQuery { TweetId = tweetId });
+        if (result.Ok) return Ok(result);
+        return BadRequest(result);
+    }
 }

@@ -28,6 +28,12 @@ export interface ISendTweetData {
     token?: string;
 }
 
+export interface FullTweet extends Tweet {
+    replies: Tweet[];
+}
+
+export type PartialFullTweet = Partial<FullTweet>;
+
 // {
 //     "tweetId": "3b328311-50d6-4a63-8297-b90e2b12cf84",
 //     "reTweetType": 0,

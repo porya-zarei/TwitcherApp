@@ -42,6 +42,6 @@ export const getFeedTweets = (
 export const useFeedTweets = (
     userName: string,
     token: string,
-): UseQueryResult<AxiosResponse<ApiResult<Tweet[]>>> => {
+): UseQueryResult<ApiResult<Tweet[]>> => {
     return useQuery(["feedTweets", userName], getFeedTweets(userName,token));
 };

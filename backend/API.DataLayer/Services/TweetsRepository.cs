@@ -83,4 +83,18 @@ public class TweetsRepository:Repository<Tweet>,ITweetsRepository
         }
         return false;
     }
+
+    public async Task<FullOutTweet?> GetFullOutTweet(Guid tweetId)
+    {
+        var tweet = await _set
+            .Include(t => t.Replies)
+            .Include(t => t.Sender)
+            .Include(t => t.BaseTweet)
+            .FirstOrDefaultAsync(t => t.TweetId == tweetId);
+        if (tweet != null)
+        {
+            return FullOutTweet.MapToOutTweetWithReplies(tweet);
+        }
+        return null;
+    }
 }

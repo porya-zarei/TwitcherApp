@@ -41,7 +41,11 @@ builder.Services.AddDbContext<MainContext>(options => options.UseNpgsql
            builder.Configuration.GetConnectionString("PostgreSqlConnection")
         )
     );
+
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<ITweetsRepository, TweetsRepository>();
+builder.Services.AddScoped<UnitOfWork>();
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
