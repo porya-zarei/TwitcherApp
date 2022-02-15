@@ -1,8 +1,8 @@
 import {useRouter} from "next/router";
 import {Context, Dispatch, useContext, useEffect, useReducer} from "react";
 import {createContext, FC, useMemo} from "react";
-import { ApiResult } from "../../types/data/api-result";
-import {PartialTweet, Tweet} from "../../types/data/tweet";
+import {ApiResult} from "../../types/data/api-result";
+import {PartialTweet, Tweet, TweetLiked} from "../../types/data/tweet";
 import {useUserContext} from "../user-context/user-context";
 
 interface HomeContextProps {
@@ -26,7 +26,9 @@ interface IActionTypes {
     type:
         | "SET_FEED_TWEETS"
         | "UPDATE_FEED_TWEETS"
+        | "UPDATE_FEED_TWEET"
         | "ADD_FEED_TWEET"
+        | "UPDATE_TWEET_LIKE"
         | "REMOVE_FEED_TWEET";
 }
 
@@ -40,12 +42,32 @@ const homeContextReducers = (
     action: IHomeContextAction,
 ) => {
     switch (action.type) {
-        case "SET_FEED_TWEETS":
+        case "SET_FEED_TWEETS": {
             return {...state, feedTweets: action.payload as Tweet[]};
-        case "ADD_FEED_TWEET":
+        }
+        case "ADD_FEED_TWEET": {
             const feeds = [...state.feedTweets];
             feeds.unshift(action.payload as Tweet);
             return {...state, feedTweets: [...feeds]};
+        }
+        case "UPDATE_TWEET_LIKE": {
+            const feeds = [...state.feedTweets];
+            const payload = action.payload as TweetLiked;
+            const index = feeds.findIndex(
+                (feed) => feed.tweetId === payload.tweetId,
+            );
+            feeds[index] = {...feeds[index], likesCount: payload?.likesCount};
+            return {...state, feedTweets: [...feeds]};
+        }
+        case "UPDATE_FEED_TWEET": {
+            const feeds = [...state.feedTweets];
+            const payload = action.payload as PartialTweet;
+            const index = feeds.findIndex(
+                (feed) => feed.tweetId === payload.tweetId,
+            );
+            feeds[index] = {...feeds[index], ...payload};
+            return {...state, feedTweets: [...feeds]};
+        }
         default:
             return state;
     }
@@ -79,10 +101,29 @@ const HomeContextProvider: FC<HomeContextProviderProps> = ({
 
     useEffect(() => {
         if (connection) {
-            connection?.on?.("NewTweetArrived", (tweet: ApiResult<PartialTweet>) => {
+            connection?.on?.(
+                "NewTweetArrived",
+                (tweet: ApiResult<PartialTweet>) => {
+                    dispatch({
+                        type: "ADD_FEED_TWEET",
+                        payload: tweet.result,
+                    });
+                },
+            );
+            connection?.on?.(
+                "TweetUpdated",
+                (tweet: ApiResult<PartialTweet>) => {
+                    dispatch({
+                        type: "UPDATE_FEED_TWEETS",
+                        payload: tweet.result,
+                    });
+                },
+            );
+            connection?.on?.("TweetLiked", (tweetLiked: ApiResult<TweetLiked>) => {
+                console.log("event tweet liked => ",tweetLiked);
                 dispatch({
-                    type: "ADD_FEED_TWEET",
-                    payload: tweet.result,
+                    type: "UPDATE_TWEET_LIKE",
+                    payload: tweetLiked.result,
                 });
             });
         }

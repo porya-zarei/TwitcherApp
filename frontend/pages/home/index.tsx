@@ -57,7 +57,6 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async ({
             },
         };
     } else {
-
         res.writeHead(302, {
             Location: "/auth/login",
         });

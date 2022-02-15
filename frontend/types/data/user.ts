@@ -19,7 +19,8 @@ export enum UserStatus {
 
 export interface User {
     userId: string;
-    fullName: string;
+    firstName: string;
+    lastName: string;
     userName: string;
     email: string;
     birthDay: Date;

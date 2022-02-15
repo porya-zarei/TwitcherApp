@@ -15,6 +15,8 @@ export interface Tweet {
     hashtags: string[];
     images: string[];
     likesCount: number;
+    retweetsCount: number;
+    repliesCount: number;
     reTweetType: TweetTypes;
     baseTweet: Tweet;
     sender: User;
@@ -33,6 +35,18 @@ export interface FullTweet extends Tweet {
 }
 
 export type PartialFullTweet = Partial<FullTweet>;
+
+export interface TweetLiked {
+    tweetId: string;
+    isLiked: boolean;
+    likesCount: number;
+}
+
+export interface ILikeTweetData {
+    isLiked: boolean;
+    tweetId: string;
+    token: string;
+}
 
 // {
 //     "tweetId": "3b328311-50d6-4a63-8297-b90e2b12cf84",

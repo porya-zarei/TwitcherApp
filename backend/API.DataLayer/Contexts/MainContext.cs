@@ -19,6 +19,9 @@ public class MainContext : DbContext
             .WithMany(t => t.Replies)
             .HasForeignKey(t => t.BaseTweetId);
 
+        modelBuilder.Entity<Tweet>()
+            .HasMany(t => t.Likers);
+
         modelBuilder.Entity<Category>()
             .HasOne(c => c.MainCategory)
             .WithMany(c => c.SubCategories)

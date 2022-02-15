@@ -71,9 +71,9 @@ export const ROUTES: IRoute[] = [
         title: "Tweet",
         href: "/tweet/new",
         icon: <HiOutlinePencilAlt className="text-[30px] md:text-[35px]" />,
-        className: "hidden md:flex mt-1 md:bg-blue-700 md:rounded-full mt-8 md:mt-0 md:px-2",
+        className: "hidden md:flex mt-1 md:rounded-full mt-8 md:mt-0 md:px-2",
         iconClassName:
-            "rounded-full bg-blue-700 p-3 md:rounded-0 md:bg-transparent md:py-2 md:pr-2 md:pl-0",
+            "rounded-full bg-primary p-3 md:rounded-0 md:bg-transparent md:py-2 md:pr-2 md:pl-0",
         onClick: () => {},
     },
 ];

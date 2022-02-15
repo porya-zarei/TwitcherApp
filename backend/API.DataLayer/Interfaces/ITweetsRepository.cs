@@ -7,4 +7,5 @@ public interface ITweetsRepository : IRepository<Tweet>
     Task<FullOutTweet?> GetFullOutTweet(Guid tweetId);
     List<OutTweet>? GetUserFeedTweets(User user);
     Task<List<OutTweet>?> GetUserFeedTweets(User user, int itemsPerPage, int pageNumber = 0);
+    Task<Tuple<long,bool>> LikeUnlike(Guid tweetId, User? user, bool isLike);
 }

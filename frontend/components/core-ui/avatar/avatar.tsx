@@ -6,7 +6,7 @@ interface AvatarProps {
     height?: string | number;
     className?: string;
     containerClassName?: string;
-    src: string;
+    src: string | StaticImageData;
     alt: string;
     layout: "intrinsic" | "fill" | "responsive" | "fixed";
 

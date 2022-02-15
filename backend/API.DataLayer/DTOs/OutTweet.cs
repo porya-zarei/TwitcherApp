@@ -10,6 +10,8 @@ public class OutTweet
     public string? Video { get; set; }
 
     public long? LikesCount { get; set; } = 0;
+    public long? RepliesCount { get; set;} = 0;
+    public long? RetweetsCount { get; set; } = 0;
     public DateTime CreatedAt { get; set; }
     public List<string>? Hashtags { get; set; }
     public OutUser? Sender { get; set; }
@@ -27,7 +29,7 @@ public class OutTweet
             CreatedAt = tweet.CreatedAt,
             Hashtags = tweet.Hashtags,
             Images = tweet.Images,
-            LikesCount = tweet.LikesCount,
+            LikesCount = tweet.Likers.Count,
             ReTweetType = tweet.ReTweetType,
             BaseTweet = haveBaseTweet ? MapToOutTweet(tweet.BaseTweet!) : null,
             Sender = OutUser.MapToOutUser(tweet.Sender),
@@ -51,7 +53,7 @@ public class FullOutTweet:OutTweet
             CreatedAt = tweet.CreatedAt,
             Hashtags = tweet.Hashtags,
             Images = tweet.Images,
-            LikesCount = tweet.LikesCount,
+            LikesCount = tweet.Likers.Count,
             ReTweetType = tweet.ReTweetType,
             BaseTweet = haveBaseTweet ? MapToOutTweet(tweet.BaseTweet!) : null,
             Sender = OutUser.MapToOutUser(tweet.Sender),

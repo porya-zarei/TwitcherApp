@@ -57,7 +57,7 @@ const SendTweetInput: FC<SendTweetInputProps> = ({
         <div className="w-full p-2 h-36 flex justify-evenly items-center flex-nowrap flex-row mb-2 border-b-[1.5px] border-secondary">
             <div className="flex-1 h-full flex justify-center items-start py-2">
                 <Avatar
-                    src={user?.profileImage ?? defaultProfile.src}
+                    src={user?.profileImage || defaultProfile.src}
                     layout="intrinsic"
                     alt={user?.userName ?? "default profile"}
                 />

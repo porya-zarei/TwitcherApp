@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using API.DataLayer.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.DataLayer.Migrations
 {
     [DbContext(typeof(MainContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20220215151703_updateTweet2")]
+    partial class updateTweet2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,6 +76,9 @@ namespace API.DataLayer.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<long?>("LikesCount")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("ReTweetType")
                         .HasColumnType("integer");
 
@@ -84,6 +89,9 @@ namespace API.DataLayer.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("TweetId1")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Video")
                         .HasColumnType("text");
 
@@ -92,6 +100,8 @@ namespace API.DataLayer.Migrations
                     b.HasIndex("BaseTweetId");
 
                     b.HasIndex("SenderId");
+
+                    b.HasIndex("TweetId1");
 
                     b.ToTable("Tweets");
                 });
@@ -145,9 +155,6 @@ namespace API.DataLayer.Migrations
                     b.Property<string>("StatusText")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("TweetId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -156,8 +163,6 @@ namespace API.DataLayer.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("TweetId");
 
                     b.ToTable("Users");
                 });
@@ -213,16 +218,13 @@ namespace API.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("API.DataLayer.Models.Tweet", null)
+                        .WithMany("Retweets")
+                        .HasForeignKey("TweetId1");
+
                     b.Navigation("BaseTweet");
 
                     b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("API.DataLayer.Models.User", b =>
-                {
-                    b.HasOne("API.DataLayer.Models.Tweet", null)
-                        .WithMany("Likers")
-                        .HasForeignKey("TweetId");
                 });
 
             modelBuilder.Entity("CategoryUser", b =>
@@ -262,9 +264,9 @@ namespace API.DataLayer.Migrations
 
             modelBuilder.Entity("API.DataLayer.Models.Tweet", b =>
                 {
-                    b.Navigation("Likers");
-
                     b.Navigation("Replies");
+
+                    b.Navigation("Retweets");
                 });
 
             modelBuilder.Entity("API.DataLayer.Models.User", b =>

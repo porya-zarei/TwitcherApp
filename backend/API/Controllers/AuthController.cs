@@ -60,7 +60,7 @@ public class AuthController : ControllerBase
         try
         {
             var res = await _mediator.Send(new LoginUserCommand { LoginUser = loginUser });
-
+            
             var pairs = new Dictionary<string, string>
             {
                 { "UserName", res?.UserName ?? "" },

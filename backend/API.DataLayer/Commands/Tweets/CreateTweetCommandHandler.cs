@@ -67,7 +67,7 @@ internal class CreateTweetCommandHandler : IRequestHandler<CreateTweetCommand, A
                         Result = outTweet,
                         Message = "Created Successfuly"
                     };
-                    await _usersHub.Clients.All.SendAsync("NewTweetArrived", result,cancellationToken);
+                    await _usersHub.Clients.All.SendAsync(UsersHubEvents.TweetCreated, result,cancellationToken);
                     return result;
                 }
             }

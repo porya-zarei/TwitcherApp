@@ -9,7 +9,6 @@ interface TweetsRouteProps {}
 
 const TweetsRoute: FC<TweetsRouteProps> = () => {
     const {fullTweet} = useTweetsPageContext();
-    console.log(fullTweet?.content);
     return (
         <MainLayoutContainer
             leftSideComponent={<TweetsLeftSide />}

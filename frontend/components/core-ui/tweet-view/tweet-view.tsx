@@ -18,14 +18,16 @@ const TweetView: FC<TweetViewProps> = ({tweet, showBaseTweet = true}) => {
             </header>
             <main className="w-full flex justify-center items-center flex-wrap flex-row">
                 <TweetUserDetails
-                    fullName={tweet?.sender?.fullName}
+                    fullName={
+                        (tweet?.sender?.firstName??"") + " " + tweet?.sender?.lastName
+                    }
                     userName={tweet?.sender?.userName}
                     tweetId={tweet?.tweetId}
                 />
                 <TweetContent content={tweet?.content ?? ""} />
                 {tweet?.images && tweet?.images?.length > 0 && (
                     <TweetImages
-                        alt={tweet.title ?? tweet.content ?? ""}
+                        alt={tweet.title || tweet.content || "tweet image"}
                         images={tweet.images}
                     />
                 )}

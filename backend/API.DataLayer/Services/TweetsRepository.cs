@@ -36,6 +36,7 @@ public class TweetsRepository:Repository<Tweet>,ITweetsRepository
         var res = await _set.Where(t => t.Content != null && t.Content.Length > 0)
             .Include(t => t.Sender)
             .Include(t => t.BaseTweet)
+            .Include(t => t.Likers)
             .OrderByDescending(t => t.CreatedAt)
             .Skip(pageNumber * itemsPerPage)
             .Take(itemsPerPage)
@@ -87,8 +88,9 @@ public class TweetsRepository:Repository<Tweet>,ITweetsRepository
     public async Task<FullOutTweet?> GetFullOutTweet(Guid tweetId)
     {
         var tweet = await _set
-            .Include(t => t.Replies)
             .Include(t => t.Sender)
+            .Include(t => t.Replies.Where(t => t.ReTweetType == TweetTypes.Reply))
+            .Include(t => t.Likers)
             .Include(t => t.BaseTweet)
             .FirstOrDefaultAsync(t => t.TweetId == tweetId);
         if (tweet != null)
@@ -96,5 +98,23 @@ public class TweetsRepository:Repository<Tweet>,ITweetsRepository
             return FullOutTweet.MapToOutTweetWithReplies(tweet);
         }
         return null;
+    }
+
+    public async Task<Tuple<long, bool>> LikeUnlike(Guid tweetId,User? user,bool isLike)
+    {
+        var tweet = await _set.FindAsync(tweetId);
+        if (tweet != null && user != null)
+        {
+            if (isLike && !tweet.Likers.Contains(user)) tweet.Likers.Add(user);
+            else if(tweet.Likers.Contains(user)) tweet.Likers.Remove(user);
+
+            await SaveAsync();
+
+            return Tuple.Create((long)tweet.Likers.Count,isLike);
+        }
+        else
+        {
+            return Tuple.Create((long)0,!isLike);
+        }
     }
 }
