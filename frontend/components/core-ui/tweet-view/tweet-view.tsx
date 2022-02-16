@@ -12,25 +12,26 @@ interface TweetViewProps {
 
 const TweetView: FC<TweetViewProps> = ({tweet, showBaseTweet = true}) => {
     return (
-        <article className="w-full flex justify-evenly items-start flex-nowrap flex-row border-b-[1.2px] border-slate-400 px-2 py-1">
-            <header className="flex-1 flex justify-center items-center flex-wrap flex-row">
+        <article className="w-full relative flex justify-evenly items-start flex-nowrap flex-row border-b-[1.2px] border-slate-400 px-2 py-1">
+            <header className="w-auto flex justify-center items-center flex-wrap flex-row sticky top-12">
                 <TweetUserProfile profileImage={tweet?.sender?.profileImage} />
             </header>
-            <main className="w-full flex justify-center items-center flex-wrap flex-row">
+            <main className="w-10/12 flex justify-center items-center flex-wrap flex-row">
                 <TweetUserDetails
                     fullName={
-                        (tweet?.sender?.firstName??"") + " " + tweet?.sender?.lastName
+                        (tweet?.sender?.firstName ?? "") +
+                        " " +
+                        tweet?.sender?.lastName
                     }
                     userName={tweet?.sender?.userName}
                     tweetId={tweet?.tweetId}
                 />
                 <TweetContent content={tweet?.content ?? ""} />
-                {tweet?.images && tweet?.images?.length > 0 && (
-                    <TweetImages
-                        alt={tweet.title || tweet.content || "tweet image"}
-                        images={tweet.images}
-                    />
-                )}
+                <TweetImages
+                    video={tweet?.video}
+                    alt={tweet.title || tweet.content || "tweet image"}
+                    images={tweet.images}
+                />
                 <TweetActionButtons tweet={tweet} />
                 {showBaseTweet && tweet.baseTweet && (
                     <div className="w-full flex justify-center items-center border-t-2 border-secondary">

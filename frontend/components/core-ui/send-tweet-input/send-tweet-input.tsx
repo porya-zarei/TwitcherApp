@@ -6,6 +6,7 @@ import {useTweetsSideContext} from "../../../contexts/tweets-side-context/tweets
 import {useUserContext} from "../../../contexts/user-context/user-context";
 import useHandleableState from "../../../hooks/useHandleableState";
 import {ISendTweetData, TweetTypes} from "../../../types/data/tweet";
+import {objectToFormData} from "../../../utils/helpers";
 import Avatar from "../../core-ui/avatar/avatar";
 import {SendICon, SendIconLoading} from "../../core-ui/common/common-icons";
 import SendTweetActionButtons from "../send-tweet-action-buttons/send-tweet-action-buttons";
@@ -23,23 +24,27 @@ const SendTweetInput: FC<SendTweetInputProps> = ({
     const {mutateAsync, isLoading} = useSendTweet();
     const {user, token} = useUserContext();
     const [images, setImages] = useState<File[]>([] as File[]);
-    const {value: tweetText, onChange: onTweetTextChange} =
+    const [video, setVideo] = useState<File>({} as File);
+    const {value: tweetText, onChange: onTweetTextChange,reset} =
         useHandleableState("");
+    
+    const resetStates = () => {
+        setImages([] as File[]);
+        setVideo({} as File);
+        reset("");
+    }
+
     const sendTweet = async () => {
         const tweet: Record<string, any> = {
             content: tweetText,
             title: tweetText,
-            images,
             reTweetType: sendType,
             senderUserName: user?.userName ?? "",
             baseTweetId: baseTweetId || "",
+            images,
+            video,
         };
-        const formData: FormData = new FormData();
-        for (const key in tweet) {
-            if (tweet.hasOwnProperty(key)) {
-                formData.append(key, tweet[key]);
-            }
-        }
+        const formData: FormData = objectToFormData(tweet);
         console.log(document.cookie);
         console.log("tweet => ", tweet, formData.get("images"));
         const data: ISendTweetData = {
@@ -50,6 +55,7 @@ const SendTweetInput: FC<SendTweetInputProps> = ({
         if (response?.ok && response?.result) {
             console.log("result in create tweet => ", response?.result);
             setShowReplyDialog?.(false);
+            resetStates();
         }
     };
     const isBtnDisabled = isLoading || tweetText.length === 0;
@@ -74,7 +80,10 @@ const SendTweetInput: FC<SendTweetInputProps> = ({
                     />
                 </div>
                 <div className="w-full mt-auto h-auto flex justify-between items-center flex-nowrap flex-row px-2">
-                    <SendTweetActionButtons setImages={setImages} />
+                    <SendTweetActionButtons
+                        setVideo={setVideo}
+                        setImages={setImages}
+                    />
                     <div className="flex-1">
                         <button
                             type="button"

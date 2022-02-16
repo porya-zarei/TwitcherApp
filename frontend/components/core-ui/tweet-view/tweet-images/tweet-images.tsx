@@ -3,9 +3,11 @@ import {FC} from "react";
 
 import defaultProfile from "../../../../assets/images/default-profile.png";
 import {baseImagesUrl, isDev} from "../../../../configs/globals";
+import TweetImagesCarousel from "./tweet-images-carousel";
 
 interface TweetImagesProps {
     images?: string[];
+    video?: string;
     alt?: string;
     width?: number | string;
     height?: number | string;
@@ -13,6 +15,7 @@ interface TweetImagesProps {
 
 const TweetImages: FC<TweetImagesProps> = ({
     images,
+    video,
     alt,
     width = 300,
     height = 450,
@@ -23,18 +26,15 @@ const TweetImages: FC<TweetImagesProps> = ({
     }
     return (
         <div className="w-full flex justify-center items-center flex-wrap flex-row">
-            <div className="tweet-view-image-container">
-                {isDev ? (
-                    <img src={url} width={"100%"} alt={alt} />
-                ) : (
-                    <Image
-                        src={url}
-                        layout="responsive"
-                        alt={alt}
-                        width={width}
-                        height={height}
-                    />
-                )}
+            {/* <Image
+                    src={url}
+                    layout="responsive"
+                    alt={alt}
+                    width={width}
+                    height={height}
+                /> */}
+            <div className="w-full flex justify-center items-center">
+                <TweetImagesCarousel video={video} images={images} />
             </div>
         </div>
     );

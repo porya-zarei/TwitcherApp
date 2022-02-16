@@ -7,6 +7,7 @@ obj
 
 /API/bin
 /API/obj
+/API/wwwroot/files
 /API.Tests/bin
 /API.Tests/obj
 /API.DataLayer/bin

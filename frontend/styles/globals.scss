@@ -4,6 +4,7 @@
 
 html,
 body {
+    overflow: hidden;
     padding: 0;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -41,6 +42,61 @@ a {
 .dialog-close {
     animation: move-down 0.5s ease-in-out;
 }
+
+//! unsafe change swiper
+@keyframes sign-to-left {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes sign-to-right {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.custom-swiper {
+    --swiper-navigation-color:rgba(143, 142, 142, 0.575);
+    --swiper-theme-color:rgba(160, 160, 160, 0.61);
+    & > .swiper-button-next{
+        font-size: 10px !important;
+        &::after{
+            opacity: 0.3;
+        }
+        &:hover {
+            &::after{
+                animation: sign-to-right 1s ease-in-out 0.2s backwards infinite;
+                opacity: 1;
+            }
+        }
+    }
+    & > .swiper-button-prev{
+        font-size: 10px !important;
+        &::after{
+            opacity: 0.3;
+        }
+        &:hover {
+            &::after{
+                animation: sign-to-left 1s ease-in-out 0.2s backwards infinite;
+                opacity: 1;
+            }
+        }
+    }
+}
+//! unsafe change swiper
 
 @layer components {
     .tweet-view-image-container {

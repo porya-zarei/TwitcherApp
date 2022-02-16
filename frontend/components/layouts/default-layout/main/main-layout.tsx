@@ -20,7 +20,7 @@ const MainLayout: FC<MainLayoutProps> = ({children}) => {
                 <section
                     className={`w-full ${getContainerClassName(
                         router.pathname,
-                    )} flex justify-center items-center`}>
+                    )} flex justify-center custom-scrollbar items-center`}>
                     {children}
                 </section>
             </section>

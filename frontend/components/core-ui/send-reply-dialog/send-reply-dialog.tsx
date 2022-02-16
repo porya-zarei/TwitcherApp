@@ -13,11 +13,13 @@ const SendReplyDialog: FC<SendReplyDialogProps> = () => {
     const [currentAnimation, setCurrentAnimation] =
         useState<string>("open-dialog");
     const handleContainerClick = (event: MouseEvent<HTMLDivElement>) => {
-        if (event.currentTarget.id === "send-reply-dialog-container") {
+        if (event.target === containerRef.current) {
             setCurrentAnimation("dialog-close");
         }
     };
-    const handleAnimationEnd: AnimationEventHandler<HTMLDivElement> = (event) => {
+    const handleAnimationEnd: AnimationEventHandler<HTMLDivElement> = (
+        event,
+    ) => {
         console.log("animation end", currentAnimation);
         if (currentAnimation === "dialog-close") {
             setShowReplyDialog?.(false);
