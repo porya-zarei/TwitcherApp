@@ -62,6 +62,6 @@ public enum UserStatus
     Happy=0,
     Busy,
     Successful,
-    failed,
+    Failed,
     CustomStatus
 }

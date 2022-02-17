@@ -36,8 +36,7 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async ({
     if (token) {
         const response = await handleLoginWithToken(token);
         token = response.result?.token ?? token;
-        const decodedToken =
-            decodeToken<{UserName: string; FullName: string}>(token);
+        const decodedToken = decodeToken<{UserName: string; FullName: string}>(token);
         const userName: string = decodedToken?.UserName || "";
         const {result: feedTweets} = await getFeedTweets(userName, token)();
         const queryClient: QueryClient = await getQueryClient({

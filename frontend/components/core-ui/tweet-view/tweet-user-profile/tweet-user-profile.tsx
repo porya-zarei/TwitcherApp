@@ -1,5 +1,6 @@
 import {FC} from "react";
 import defaultProfile from "../../../../assets/images/default-profile.png";
+import { getUserProfileImage } from "../../../../utils/helpers";
 import Avatar from "../../../core-ui/avatar/avatar";
 
 interface TweetUserProfileProps {
@@ -15,10 +16,11 @@ const TweetUserProfile: FC<TweetUserProfileProps> = ({
     height = 50,
     width = 50,
 }) => {
+    let imageUrl = getUserProfileImage(profileImage);
     return (
         <div className="flex justify-center items-start p-2">
             <Avatar
-                src={(profileImage ?? defaultProfile) || defaultProfile}
+                src={imageUrl}
                 layout="intrinsic"
                 alt={alt}
                 height={height}

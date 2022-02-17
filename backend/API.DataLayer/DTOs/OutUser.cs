@@ -16,13 +16,15 @@ public record OutUser
 
     public string ConnectionId { get; set; } = "";
 
-    public DateOnly? BirthDay { get; set; }
+    public string? BirthDay { get; set; } = "";
 
     public string Bio { get; set; } = "";
 
-    public string? ProfileImage { get; set; }
+    public string? ProfileImage { get; set; } = "";
 
-    public string? BackgroundImage { get; set; }
+    public string? BackgroundImage { get; set; } = "";
+
+    public string? PhoneNumber { get; set; } = "";
 
     public UserStatus? Status { get; set; } = UserStatus.Happy;
     public DateTime? JoinedAt { get; set; }
@@ -46,8 +48,9 @@ public record OutUser
             Status = user.Status,
             Bio = user.Bio,
             ProfileImage = user.ProfileImage,
-            BirthDay = user.BirthDay,
+            BirthDay = user.BirthDay.ToString(),
             Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
             FollowersCount = user.Followers!.Count,
             FollowingsCount = user.Followings!.Count,
             InterestedCategories = user.InterestedCategories!.ToList(),
@@ -74,8 +77,9 @@ public record OutUserWithToken:OutUser
             Status = user.Status,
             Bio = user.Bio,
             ProfileImage = user.ProfileImage,
-            BirthDay = user.BirthDay,
+            BirthDay = user.BirthDay.ToString(),
             Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
             FollowersCount = user.Followers!.Count,
             FollowingsCount = user.Followings!.Count,
             InterestedCategories = user.InterestedCategories!.ToList(),

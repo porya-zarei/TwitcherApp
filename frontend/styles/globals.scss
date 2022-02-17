@@ -98,6 +98,22 @@ a {
 }
 //! unsafe change swiper
 
+@keyframes spin-left {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.animate-spin-left {
+    animation: spin-left 1s linear infinite;
+}
+.animate-spin-left-hover:hover{
+    animation: spin-left 1s linear infinite;
+}
+
 @layer components {
     .tweet-view-image-container {
         @apply w-full;

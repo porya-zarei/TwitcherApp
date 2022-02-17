@@ -1,10 +1,17 @@
-import {ChangeEventHandler, memo, useCallback, useMemo, useState} from "react";
+import {
+    ChangeEventHandler,
+    Dispatch,
+    SetStateAction,
+    useCallback,
+    useMemo,
+    useState,
+} from "react";
 type ST = string | number | boolean;
 
 interface useHandleableStateType<U> {
     value: U;
     onChange: ChangeEventHandler<HTMLInputElement>;
-    update: (value: ((ps: U) => U) | U) => void;
+    update: Dispatch<SetStateAction<U>>;
     reset: (reset: U) => void;
 }
 function useHandleableState<T = ST>(
@@ -13,7 +20,6 @@ function useHandleableState<T = ST>(
     const [state, setState] = useState<T>(initialValue);
     const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
         (event) => {
-            console.log(event.target.value);
             if (typeof state === "number") {
                 setState(Number(event.target.value) as number & T);
             } else if (typeof state === "boolean") {
@@ -26,7 +32,7 @@ function useHandleableState<T = ST>(
         },
         [],
     );
-    const handleUpdate = useCallback<(newState: ((ps: T) => T) | T) => void>(
+    const handleUpdate = useCallback<(newState: SetStateAction<T>) => void>(
         (newState) => {
             if (
                 typeof newState === typeof state ||

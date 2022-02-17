@@ -13,7 +13,7 @@ export enum UserStatus {
     Happy = 0,
     Busy,
     Successful,
-    failed,
+    Failed,
     CustomStatus,
 }
 
@@ -23,7 +23,8 @@ export interface User {
     lastName: string;
     userName: string;
     email: string;
-    birthDay: Date;
+    birthDay: string;
+    phoneNumber: string;
     bio: string;
     profileImage: string;
     backgroundImage: string;
@@ -39,3 +40,13 @@ export interface User {
 export type PartialUser = Partial<User>;
 
 export type PartialUserWithToken = PartialUser & {token?: string};
+
+export interface IUserImagesChangedData {
+    data: FormData;
+    token: string;
+}
+
+export interface IUserImagesChangedResult {
+    profileImage: string;
+    backgroundImage: string;
+}

@@ -6,7 +6,7 @@ import {useTweetsSideContext} from "../../../contexts/tweets-side-context/tweets
 import {useUserContext} from "../../../contexts/user-context/user-context";
 import useHandleableState from "../../../hooks/useHandleableState";
 import {ISendTweetData, TweetTypes} from "../../../types/data/tweet";
-import {objectToFormData} from "../../../utils/helpers";
+import {getUserProfileImage, objectToFormData} from "../../../utils/helpers";
 import Avatar from "../../core-ui/avatar/avatar";
 import {SendICon, SendIconLoading} from "../../core-ui/common/common-icons";
 import SendTweetActionButtons from "../send-tweet-action-buttons/send-tweet-action-buttons";
@@ -25,14 +25,18 @@ const SendTweetInput: FC<SendTweetInputProps> = ({
     const {user, token} = useUserContext();
     const [images, setImages] = useState<File[]>([] as File[]);
     const [video, setVideo] = useState<File>({} as File);
-    const {value: tweetText, onChange: onTweetTextChange,reset} =
-        useHandleableState("");
-    
+    const {
+        value: tweetText,
+        onChange: onTweetTextChange,
+        reset,
+        update,
+    } = useHandleableState("");
+
     const resetStates = () => {
         setImages([] as File[]);
         setVideo({} as File);
         reset("");
-    }
+    };
 
     const sendTweet = async () => {
         const tweet: Record<string, any> = {
@@ -59,11 +63,12 @@ const SendTweetInput: FC<SendTweetInputProps> = ({
         }
     };
     const isBtnDisabled = isLoading || tweetText.length === 0;
+    let imageUrl = getUserProfileImage(user);
     return (
         <div className="w-full p-2 h-36 flex justify-evenly items-center flex-nowrap flex-row mb-2 border-b-[1.5px] border-secondary">
             <div className="flex-1 h-full flex justify-center items-start py-2">
                 <Avatar
-                    src={user?.profileImage || defaultProfile.src}
+                    src={imageUrl}
                     layout="intrinsic"
                     alt={user?.userName ?? "default profile"}
                 />
@@ -83,6 +88,7 @@ const SendTweetInput: FC<SendTweetInputProps> = ({
                     <SendTweetActionButtons
                         setVideo={setVideo}
                         setImages={setImages}
+                        updateTweetText={update}
                     />
                     <div className="flex-1">
                         <button

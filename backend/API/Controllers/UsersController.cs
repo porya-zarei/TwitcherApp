@@ -43,4 +43,16 @@ public class UsersController : ControllerBase
         var res = await _mediator.Send(new UnFollowingUserCommand { FollowerUserName = followerUserName, FollowedUserName = followedUserName });
         return res;
     }
+
+    [HttpPost("UpdateUserImages")]
+    [Authorize]
+    public async Task<ActionResult<APIResult<UserImagesChangedResult>>> UpdateUserImages([FromForm]UserImagesChanged userImages)
+    {
+        var userName = User.FindFirst("UserName")?.Value ?? "";
+        userImages.UserName = userName;
+        var res = await _mediator.Send(new ChangeUserImagesCommand { UserImagesChanged = userImages });
+        if (res.Ok) return Ok(res);
+        return BadRequest(res);
+    }
+
 }

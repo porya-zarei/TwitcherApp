@@ -17,18 +17,20 @@ interface SendTweetActionButtonsProps {
     images?: FileList;
     setImages?: Dispatch<SetStateAction<File[]>>;
     setVideo?: Dispatch<SetStateAction<File>>;
+    updateTweetText?: Dispatch<SetStateAction<string>>;
 }
 
 const SendTweetActionButtons: FC<SendTweetActionButtonsProps> = ({
     setImages,
-    setVideo
+    setVideo,
+    updateTweetText,
 }) => {
     return (
         <div className="w-full">
             <SendImageActionButton setImages={setImages} />
             <SendVideoActionButton setVideo={setVideo} />
             <SendEventActionButton />
-            <SendEmojiActionButton />
+            <SendEmojiActionButton updateTweetText={updateTweetText} />
             <SendLocationActionButton />
         </div>
     );

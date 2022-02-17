@@ -5,11 +5,13 @@ import {HiLockClosed} from "react-icons/hi";
 import {useLogin} from "../../../../../api/mutations/useLogin";
 import {useUserContext} from "../../../../../contexts/user-context/user-context";
 import useHandleableState from "../../../../../hooks/useHandleableState";
+import useNotification from "../../../../../hooks/useNotification";
 
 interface LoginFormProps {}
 
 const LoginForm: FC<LoginFormProps> = () => {
     const {changeUser, changeToken} = useUserContext();
+    const {notify} = useNotification();
     const router = useRouter();
     const {mutateAsync} = useLogin();
     const {value: email, onChange: onEmailChange} = useHandleableState("");
@@ -36,6 +38,10 @@ const LoginForm: FC<LoginFormProps> = () => {
             changeUser(response.result);
             changeToken(response?.result?.token);
             router.push("/home");
+        }else{
+            notify("Login failed",{
+                type: "error",
+            });
         }
     };
 
