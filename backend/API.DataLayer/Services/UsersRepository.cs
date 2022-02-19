@@ -35,6 +35,22 @@ public class UsersRepository:Repository<User>,IUsersRepository
         return (await _set.Include(u => u.Followers).Include(u => u.Followings).FirstOrDefaultAsync(u => u.UserName == userName));
     }
 
+
+    public async Task<User?> GetUserWithUserName(string userName,bool full)
+    {
+        if (full)
+            return (await _set
+                .Include(u => u.Followers)
+                .Include(u => u.Followings)
+                .Include(u => u.Tweets)
+                .FirstOrDefaultAsync(u => u.UserName == userName));
+        else
+            return (await _set
+                .Include(u => u.Followers)
+                .Include(u => u.Followings)
+                .FirstOrDefaultAsync(u => u.UserName == userName));
+    }
+
     public async Task<bool> FollowingUser(string followerUserName,string followingUserName)
     {
         if (followerUserName != null && followingUserName != null)

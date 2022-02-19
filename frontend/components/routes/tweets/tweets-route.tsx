@@ -8,7 +8,6 @@ import TweetsRightSide from "./tweets-right-side/tweets-right-side";
 interface TweetsRouteProps {}
 
 const TweetsRoute: FC<TweetsRouteProps> = () => {
-    const {fullTweet} = useTweetsPageContext();
     return (
         <MainLayoutContainer
             leftSideComponent={<TweetsLeftSide />}

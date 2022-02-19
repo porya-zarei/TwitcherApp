@@ -55,4 +55,13 @@ public class UsersController : ControllerBase
         return BadRequest(res);
     }
 
+    [HttpGet("GetVisitedUser/{userName}")]
+    [Authorize]
+    public async Task<ActionResult<APIResult<FullOutUser>>> GetVisitedUser(string userName)
+    {
+        var result = await _mediator.Send(new GetVisitedUserQuery { userName = userName });
+        if (result.Ok) return Ok(result);
+        return BadRequest(result);
+    }
+
 }

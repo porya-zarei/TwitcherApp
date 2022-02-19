@@ -1,5 +1,6 @@
 import {PartialUser} from "../types/data/user";
 import defaultProfile from "../assets/images/default-profile.png";
+import defaultBackground from "../assets/images/default-background.jpg";
 
 export const getRandomNumber = (
     min: number = 0,
@@ -36,6 +37,22 @@ export const getUserProfileImage = (
     //     user.profileImage?.length > 0
     // ) {
     //     imageUrl = user.profileImage;
+    // }
+    return imageUrl;
+};
+
+export const getUserBackgroundImage = (
+    user?: PartialUser | string | StaticImageData,
+): string | StaticImageData => {
+    let imageUrl: StaticImageData | string = defaultBackground;
+    // if (typeof user === "string" && user.length > 0) {
+    //     imageUrl = user;
+    // }else if (
+    //     typeof user === "object" &&
+    //     user?.backgroundImage &&
+    //     user.backgroundImage?.length > 0
+    // ) {
+    //     imageUrl = user.backgroundImage;
     // }
     return imageUrl;
 };

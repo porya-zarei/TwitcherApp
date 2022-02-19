@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {useRouter} from "next/router";
 import { FC} from "react";
 import {HiDotsHorizontal} from "react-icons/hi";
@@ -29,9 +30,11 @@ const TweetUserDetails: FC<TweetUserDetailsProps> = ({
     ];
     return (
         <div className="w-full flex justify-start items-center flex-nowrap flex-row">
-            <span className="mr-3 first-letter:uppercase">
-                {fullName || ""}
-            </span>
+            <Link href={`/users/${userName||""}`}>
+                <a className="bg-transparent border-none font-bold hover:underline mr-3 first-letter:uppercase">
+                    {fullName || ""}
+                </a>
+            </Link>
             <span className="mr-1 text-secondary">{"@" + userName || ""}</span>
             <span className="ml-auto relative">
                 <button

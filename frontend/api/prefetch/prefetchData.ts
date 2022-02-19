@@ -7,8 +7,6 @@ import {getFullTweet} from "../queries/useFullTweet";
 
 const rqStaleTime: number = 1000 * 60 * 5;
 
-// let queryClient: QueryClient;
-
 interface initialData {
     feedTweetsData: {
         tweets: Tweet[];
@@ -34,7 +32,7 @@ export const prefetchOptions: FetchQueryOptions<ApiResult<any>> = {
 };
 
 export const getQueryClient = async (initial?: initialData) => {
-    const queryClient = new QueryClient();
+    const queryClient =  new QueryClient();
     if (initial?.feedTweetsData?.tweets) {
         queryClient.setQueryData(
             ["feedTweets", initial.feedTweetsData.userName],

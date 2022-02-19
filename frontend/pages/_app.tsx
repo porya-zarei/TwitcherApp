@@ -17,7 +17,7 @@ const MyApp = ({Component, pageProps}: AppPropsWithLayout) => {
         Component?.getLayout ||
         ((page: ReactNode) => <DefaultLayout>{page}</DefaultLayout>);
 
-    const [queryClient] = useState<QueryClient>(new QueryClient());
+    const [queryClient] = useState<QueryClient>(() => new QueryClient());
 
     return (
         <QueryClientProvider client={queryClient}>

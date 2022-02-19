@@ -51,8 +51,8 @@ public record OutUser
             BirthDay = user.BirthDay.ToString(),
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            FollowersCount = user.Followers!.Count,
-            FollowingsCount = user.Followings!.Count,
+            FollowersCount = user.Followers != null ? user.Followers.Count : 0,
+            FollowingsCount = user.Followings != null ? user.Followings.Count : 0,
             InterestedCategories = user.InterestedCategories!.ToList(),
             JoinedAt = user.JoinedAt,
             StatusText = user.StatusText,
@@ -80,13 +80,50 @@ public record OutUserWithToken:OutUser
             BirthDay = user.BirthDay.ToString(),
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            FollowersCount = user.Followers!.Count,
-            FollowingsCount = user.Followings!.Count,
+            FollowersCount = user.Followers != null ? user.Followers.Count : 0,
+            FollowingsCount = user.Followings != null ? user.Followings.Count : 0,
             InterestedCategories = user.InterestedCategories!.ToList(),
             JoinedAt = user.JoinedAt,
             StatusText = user.StatusText,
             UserName = user.UserName,
             UserType = user.UserType
+        } : null;
+    }
+}
+
+public record FullOutUser : OutUser
+{
+    public List<OutTweet> Tweets { get; set; } = new List<OutTweet> { };
+
+    public List<OutTweet> Replies { get; set; } = new List<OutTweet> { };
+
+    public List<OutTweet> Retweets { get; set; } = new List<OutTweet> { };
+
+    public static FullOutUser? MapToFullOutUser(User? user)
+    {
+        return user != null ? new FullOutUser
+        {
+            UserId = user.UserId,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            ConnectionId = user.ConnectionId,
+            BackgroundImage = user.BackgroundImage,
+            Status = user.Status,
+            Bio = user.Bio,
+            ProfileImage = user.ProfileImage,
+            BirthDay = user.BirthDay.ToString(),
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            FollowersCount = user.Followers != null?user.Followers.Count:0,
+            FollowingsCount = user.Followings != null ? user.Followings.Count :0,
+            InterestedCategories = user.InterestedCategories!.ToList(),
+            JoinedAt = user.JoinedAt,
+            StatusText = user.StatusText,
+            UserName = user.UserName,
+            UserType = user.UserType,
+            Tweets = user.Tweets != null? user.Tweets.Where(t => t.ReTweetType == TweetTypes.Tweet).Select(t => OutTweet.MapToOutTweet(t)).ToList() :new List<OutTweet> { },
+            Replies = user.Tweets != null ? user.Tweets.Where(t => t.ReTweetType == TweetTypes.Reply).Select(t => OutTweet.MapToOutTweet(t)).ToList() : new List<OutTweet> { },
+            Retweets = user.Tweets != null ? user.Tweets.Where(t => t.ReTweetType == TweetTypes.ReTweet).Select(t => OutTweet.MapToOutTweet(t)).ToList() : new List<OutTweet> { }
         } : null;
     }
 }

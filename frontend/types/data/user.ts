@@ -1,4 +1,5 @@
 import {Category} from "./category";
+import { PartialTweet } from "./tweet";
 
 export enum UserTypes {
     Creator = 0,
@@ -35,6 +36,7 @@ export interface User {
     followersCount: number;
     followingsCount: number;
     interestedCategories: Category[];
+    tweets: PartialTweet[];
 }
 
 export type PartialUser = Partial<User>;

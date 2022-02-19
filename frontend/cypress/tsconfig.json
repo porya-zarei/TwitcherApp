@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
         "strict": true,
+        "allowJs": true,
         "target": "es5",
         "lib": ["es5", "dom"],
-        "types": ["cypress"],
+        "types": ["cypress", "@testing-library/cypress"],
         "forceConsistentCasingInFileNames": true,
         "importHelpers": true
     },
-    "include": ["**/*.ts"]
+    "include": ["**/*.{ts,tsx,js,jsx}", "**/*.*"]
 }

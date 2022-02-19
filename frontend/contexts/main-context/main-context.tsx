@@ -16,7 +16,7 @@ const MainContextProvider: FC<MainContextProviderProps> = ({children}) => {
 
 export default MainContextProvider;
 
-export const useMainContext = () => {
+export const useMainContext = ():IMainContext => {
     const context = useContext<IMainContext>(MainContext);
     if (!context) {
         throw new Error("useMainContext must be used within a MainContextProvider");
