@@ -122,7 +122,7 @@ public class UsersRepository:Repository<User>,IUsersRepository
 
     public async Task<bool> IsUserNameUnique(string userName)
     {
-        var isUnique = !(await _set.AnyAsync(u => u.UserName == userName));
+        var isUnique = userName.Length > 3 && !(await _set.AnyAsync(u => u.UserName == userName));
         return isUnique;
     }
 

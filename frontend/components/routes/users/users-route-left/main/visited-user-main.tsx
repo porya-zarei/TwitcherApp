@@ -23,10 +23,12 @@ const VisitedUserMain: FC<VisitedUserMainProps> = ({user}) => {
             },
             {
                 id: 2,
-                title: "Tweets & Replies",
+                title: "Replies",
                 component: (
-                    <div className="w-full h-screen bg-lime-300">
-                        Tweets & Replies
+                    <div className="w-full mt-3 flex justify-center items-center content-start flex-wrap flex-row mb-20">
+                        {user?.replies?.map((tweet) => (
+                            <TweetView key={tweet.tweetId} tweet={tweet} />
+                        ))}
                     </div>
                 ),
             },
@@ -34,7 +36,7 @@ const VisitedUserMain: FC<VisitedUserMainProps> = ({user}) => {
                 id: 3,
                 title: "Media",
                 component: (
-                    <div className="w-full h-screen bg-blue-300">Media</div>
+                    <div className="w-full h-screen"></div>
                 ),
             },
             {

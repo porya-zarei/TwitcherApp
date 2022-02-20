@@ -2,7 +2,8 @@
 
 public class GetVisitedUserQuery : IRequest<APIResult<FullOutUser?>>
 {
-    public string userName { get; set; } = "";
+    public string UserName { get; set; } = "";
+    public string VisitorUserName { get; set; } = "";
 }
 
 public class GetVisitedUserQueryHandler : IRequestHandler<GetVisitedUserQuery, APIResult<FullOutUser?>>
@@ -16,12 +17,13 @@ public class GetVisitedUserQueryHandler : IRequestHandler<GetVisitedUserQuery, A
     {
         try
         {
-            var user = await _unitOfWork.usersRepository.GetUserWithUserName(request.userName,true);
-            if (user != null)
+            var user = await _unitOfWork.usersRepository.GetUserWithUserName(request.UserName,true);
+            var visitor = await _unitOfWork.usersRepository.GetUserWithUserName(request.VisitorUserName);
+            if (user != null && visitor != null)
             {
                 return new APIResult<FullOutUser?>
                 {
-                    Result = FullOutUser.MapToFullOutUser(user),
+                    Result = FullOutUser.MapToFullOutUser(user,visitor),
                     Message = "Successful",
                     Status = 200
                 };

@@ -1,5 +1,6 @@
 import {FC} from "react";
 import { ToastContainer } from "react-toastify";
+import PageProgressBar from "../../core-ui/page-progress-bar/page-progress-bar";
 import FooterLayout from "./footer/footer-layout";
 import HeaderLayout from "./header/header-layout";
 import MainLayout from "./main/main-layout";
@@ -12,6 +13,7 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({children}) => {
         <div>
             <MetaLayout />
             <HeaderLayout />
+            <PageProgressBar/>
             <MainLayout>{children}</MainLayout>
             <ToastContainer/>
             <FooterLayout />

@@ -99,7 +99,9 @@ public record FullOutUser : OutUser
 
     public List<OutTweet> Retweets { get; set; } = new List<OutTweet> { };
 
-    public static FullOutUser? MapToFullOutUser(User? user)
+    public bool IsFollowed { get; set; } = false;
+
+    public static FullOutUser? MapToFullOutUser(User? user,User visitor)
     {
         return user != null ? new FullOutUser
         {
@@ -121,6 +123,7 @@ public record FullOutUser : OutUser
             StatusText = user.StatusText,
             UserName = user.UserName,
             UserType = user.UserType,
+            IsFollowed = user.Followers != null && user.Followers.Contains(visitor),
             Tweets = user.Tweets != null? user.Tweets.Where(t => t.ReTweetType == TweetTypes.Tweet).Select(t => OutTweet.MapToOutTweet(t)).ToList() :new List<OutTweet> { },
             Replies = user.Tweets != null ? user.Tweets.Where(t => t.ReTweetType == TweetTypes.Reply).Select(t => OutTweet.MapToOutTweet(t)).ToList() : new List<OutTweet> { },
             Retweets = user.Tweets != null ? user.Tweets.Where(t => t.ReTweetType == TweetTypes.ReTweet).Select(t => OutTweet.MapToOutTweet(t)).ToList() : new List<OutTweet> { }

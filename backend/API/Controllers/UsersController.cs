@@ -59,8 +59,16 @@ public class UsersController : ControllerBase
     [Authorize]
     public async Task<ActionResult<APIResult<FullOutUser>>> GetVisitedUser(string userName)
     {
-        var result = await _mediator.Send(new GetVisitedUserQuery { userName = userName });
+        var result = await _mediator.Send(new GetVisitedUserQuery { UserName = userName });
         if (result.Ok) return Ok(result);
+        return BadRequest(result);
+    }
+
+    [HttpGet("IsUserNameUnique/{userName}")]
+    public async Task<ActionResult<APIResult<bool>>> IsUserNameUnique(string userName)
+    {
+        var result = await _mediator.Send(new GetIsUserNameUniqueQuery { UserName = userName });
+        if(result.Ok) return Ok(result);
         return BadRequest(result);
     }
 

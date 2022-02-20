@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async ({
 }) => {
     let token = getCookieValueServer(req as NextApiRequest, "token") ?? "";
     console.log("token", token);
-    if (token) {
+    if (token.length > 0) {
         const response = await handleLoginWithToken(token);
         token = response.result?.token ?? token;
         const decodedToken = decodeToken<{UserName: string; FullName: string}>(token);

@@ -1,24 +1,32 @@
-import type {NextPage} from "next";
+import type {GetServerSideProps, NextApiRequest, NextPage} from "next";
 import Link from "next/link";
 import {useEffect, useRef} from "react";
+import IndexRoute from "../components/routes/index/index-route";
+import {getCookieValueServer} from "../utils/cookies-helpers";
 
 const IndexPage: NextPage = () => {
-    return (
-        <div className="">
-            <Link href={"/home/"}>
-                <a>home page</a>
-            </Link>
-            <Link href={"/auth/login/"}>
-                <a>login page</a>
-            </Link>
-            <Link href={"/auth/register/"}>
-                <a>register page</a>
-            </Link>
-            <Link href={"/tweets/b65816e8-6a22-4bdd-b088-9cd36ab5e96f"}>
-                <a>tweets</a>
-            </Link>
-        </div>
-    );
+    return <IndexRoute />;
 };
 
 export default IndexPage;
+
+export const getServerSideProps: GetServerSideProps = async ({res, req}) => {
+    let token = getCookieValueServer(req as NextApiRequest, "token") ?? "";
+    if (token.length > 0) {
+        res.writeHead(302, {
+            Location: "/home",
+        });
+        res.end();
+        return {
+            props: {},
+        };
+    } else {
+        res.writeHead(302, {
+            Location: "/auth/login",
+        });
+        res.end();
+        return {
+            props: {},
+        };
+    }
+};

@@ -114,6 +114,34 @@ a {
     animation: spin-left 1s linear infinite;
 }
 
+.tab-btn-after::after{
+    content: '';
+    position: absolute;
+    bottom:0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 2px 2px 0 0;
+    transition: all 0.3s ease-in-out;
+}
+
+@keyframes width-change {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.width-animate {
+    animation: width-change 1.5s 0.1s cubic-bezier(0.165, 0.4, 0.60, 1);
+}
+
+.width-animate-hover:hover {
+    animation: width-change 1.5s 0.1s cubic-bezier(0.165, 0.4, 0.60, 1);
+}
+
 @layer components {
     .tweet-view-image-container {
         @apply w-full;

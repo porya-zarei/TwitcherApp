@@ -15,6 +15,7 @@ import {
     getUserProfileImage,
 } from "../../../../../utils/helpers";
 import Avatar from "../../../../core-ui/avatar/avatar";
+import FollowingButton from "./following-button/following-button";
 interface VisitedUserHeaderProps {
     user?: PartialUser;
 }
@@ -60,12 +61,7 @@ const VisitedUserHeader: FC<VisitedUserHeaderProps> = ({user}) => {
                         </button>
                     </div>
                     <div className="m-1">
-                        <button
-                            title="Following"
-                            type="button"
-                            className="hover:text-red-500 h-10 transition-all hover:border-red-500 rounded-full text-white font-bold px-4 border-[1px] border-secondary flex justify-center items-center">
-                            Following
-                        </button>
+                        <FollowingButton user={user} />
                     </div>
                 </div>
                 <div className="w-full flex justify-start content-evenly flex-wrap flex-row px-4">
@@ -78,7 +74,7 @@ const VisitedUserHeader: FC<VisitedUserHeaderProps> = ({user}) => {
                     <div className="w-full flex justify-start items-center">
                         <p>{user?.bio}</p>
                     </div>
-                    <div className="w-full flex justify-start items-center text-lg">
+                    <div className="w-full flex justify-start items-center flex-wrap text-lg">
                         <span className="pr-2 py-1 text-secondary inline-flex justify-center items-center">
                             <span className="pr-1">
                                 <HiLocationMarker />

@@ -23,9 +23,9 @@ const TabMenuHeader: FC<TabMenuHeaderProps> = ({
                     }`}>
                     <button
                         type="button"
-                        className={`transition-all pb-2 ${
+                        className={`transition-all pb-2 relative ${
                             activeTab === item.id
-                                ? "border-b-[3px] border-primary text-white"
+                                ? "text-white tab-btn-after after:bg-primary"
                                 : "text-secondary"
                         }`}>
                         {item.title}

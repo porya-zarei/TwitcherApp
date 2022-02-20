@@ -37,6 +37,9 @@ export interface User {
     followingsCount: number;
     interestedCategories: Category[];
     tweets: PartialTweet[];
+    replies: PartialTweet[];
+    retweets: PartialTweet[];
+    isFollowed: boolean;
 }
 
 export type PartialUser = Partial<User>;

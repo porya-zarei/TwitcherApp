@@ -6,6 +6,7 @@ import {useLogin} from "../../../../../api/mutations/useLogin";
 import {useUserContext} from "../../../../../contexts/user-context/user-context";
 import useHandleableState from "../../../../../hooks/useHandleableState";
 import useNotification from "../../../../../hooks/useNotification";
+import {loginValidation} from "../../validations";
 
 interface LoginFormProps {}
 
@@ -23,25 +24,27 @@ const LoginForm: FC<LoginFormProps> = () => {
         event: FormEvent<HTMLFormElement>,
     ) => Promise<void> = async (event) => {
         event.preventDefault();
-        console.log(email, password, rememberMe);
-        const response = await mutateAsync({
-            email,
-            password,
-        });
-        if (
-            response.ok &&
-            response?.result &&
-            response?.result?.token &&
-            changeUser &&
-            changeToken
-        ) {
-            changeUser(response.result);
-            changeToken(response?.result?.token);
-            router.push("/home");
-        }else{
-            notify("Login failed",{
-                type: "error",
+        const loginValidationsResult = loginValidation(email, password, notify);
+        if (loginValidationsResult) {
+            const response = await mutateAsync({
+                email,
+                password,
             });
+            if (
+                response.ok &&
+                response?.result &&
+                response?.result?.token &&
+                changeUser &&
+                changeToken
+            ) {
+                changeUser(response.result);
+                changeToken(response?.result?.token);
+                router.push("/home");
+            } else {
+                notify("Login failed", {
+                    type: "error",
+                });
+            }
         }
     };
 
@@ -108,6 +111,7 @@ const LoginForm: FC<LoginFormProps> = () => {
             <div className="w-full flex items-center justify-between">
                 <button
                     type="submit"
+                    id="login-button"
                     className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-light bg-primary hover:bg-dark-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                     <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                         <HiLockClosed className="h-5 w-5 text-light group-hover:text-light-gray" />
