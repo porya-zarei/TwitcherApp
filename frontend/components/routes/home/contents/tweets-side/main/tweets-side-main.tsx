@@ -1,7 +1,10 @@
+import dynamic from "next/dynamic";
 import {FC} from "react";
 import SendReplyDialog from "../../../../../core-ui/send-reply-dialog/send-reply-dialog";
 import SendTweetInput from "../../../../../core-ui/send-tweet-input/send-tweet-input";
 import TweetsView from "./tweets/tweets-view";
+
+// const TweetsView = dynamic(()=> import("./tweets/tweets-view"), {ssr:false});
 
 interface TweetsSideMainProps {}
 

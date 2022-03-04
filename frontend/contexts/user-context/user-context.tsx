@@ -15,7 +15,7 @@ import {createContext, FC, useMemo, useState} from "react";
 import {PartialUser} from "../../types/data/user";
 import {HUBS} from "../../configs/globals";
 import useNotification from "../../hooks/useNotification";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 interface IUserContext {
     user?: PartialUser;
@@ -59,45 +59,40 @@ const UserContextProvider: FC<UserContextProviderProps> = ({
         [],
     );
     useEffect(() => {
-        if (
-            !router.pathname.includes("login") &&
-            !router.pathname.includes("register")
-        ) {
-            console.log("connecting to hub");
-            const userConnection: HubConnection = new HubConnectionBuilder()
-                .configureLogging(LogLevel.Trace)
-                .withAutomaticReconnect()
-                .withUrl(HUBS.users)
-                .build();
+        console.log("connecting to hub");
+        const userConnection: HubConnection = new HubConnectionBuilder()
+            .configureLogging(LogLevel.Trace)
+            .withAutomaticReconnect()
+            .withUrl(HUBS.users)
+            .build();
+        userConnection.on("GetUserDataUpdate", (data) => {
+            console.log("main User Data => ", data);
+            setUser(data);
+        });
+        userConnection.on("GetNotification", (message) => {
+            notify(message);
+        });
 
-            userConnection.on("GetUserDataUpdate", (data) => {
-                console.log("main User Data => ", data);
-                setUser(data);
-            });
-            userConnection.on("GetNotification", (message) => {
-                notify(message);
-            });
+        userConnection.on("CheckThisUserStatus", (connectionId) => {
+            userConnection.send("GetCheckUserStatus", connectionId);
+        });
 
-            userConnection.on("CheckThisUserStatus", (connectionId) => {
-                userConnection.send("GetCheckUserStatus", connectionId);
-            });
+        userConnection.on("ConnectionChecked", (connId) => {
+            console.log(connId);
+        });
 
-            userConnection.on("ConnectionChecked", (connId) => {
-                console.log(connId);
-            });
-
-            const onSuccess = async () => {
-                console.log("successfull connection", token, userConnection);
-                setConnection(userConnection);
-            };
-            const onReject = () => {
-                console.log("rejected connection");
-            };
-            userConnection.start().then(onSuccess, onReject);
-            return () => {
-                userConnection?.stop();
-            };
-        }
+        const onSuccess = async () => {
+            console.log("successfull connection");
+            console.log("connection => ", connection);
+            setConnection(userConnection);
+        };
+        const onReject = () => {
+            console.log("rejected connection");
+        };
+        userConnection.start().then(onSuccess, onReject);
+        return () => {
+            userConnection?.stop();
+        };
     }, []);
     const context: IUserContext = useMemo<IUserContext>(
         () => ({

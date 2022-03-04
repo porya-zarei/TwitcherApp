@@ -117,13 +117,14 @@ export const registerValidation = (
     if (userNameErrors.length > 0) {
         notify(userNameErrors, {type: "error", autoClose: false});
     }
-    return (
-        emailErrors.length === 0 &&
-        passwordErrors.length === 0 &&
-        firstNameErrors.length === 0 &&
-        lastNameErrors.length === 0 &&
-        userNameErrors.length === 0
-    );
+    // return (
+    //     emailErrors.length === 0 &&
+    //     passwordErrors.length === 0 &&
+    //     firstNameErrors.length === 0 &&
+    //     lastNameErrors.length === 0 &&
+    //     userNameErrors.length === 0
+    // );
+    return true;
 };
 
 export const loginValidation = (
@@ -146,5 +147,6 @@ export const loginValidation = (
     if (passwordErrors.length > 0) {
         notify(passwordErrors, {type: "error", autoClose: false});
     }
-    return emailErrors.length === 0 && passwordErrors.length === 0;
+    // return emailErrors.length === 0 && passwordErrors.length === 0;
+    return true;
 };

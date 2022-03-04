@@ -1,30 +1,50 @@
-import {FC} from "react";
-import { HiSearch } from "react-icons/hi";
-import SearchSuggestionView from "./search-suggestion-view/search-suggestion";
+import dynamic from "next/dynamic";
+import {FC, useEffect, useState} from "react";
+import {useSuggestedUsers} from "../../../api/queries/useSuggestedUsers";
+import {getUserProfileImage} from "../../../utils/helpers";
+import SearchInputView from "./search-view-input/search-input-view";
+
+export interface ISerachSuggestion {
+    title: string;
+    url: string;
+    imageUrl: string;
+    userName: string;
+}
 
 interface SearchViewProps {}
 
+const SearchSuggestionView = dynamic(
+    () => import("./search-suggestion-view/search-suggestion"),
+    {ssr: false},
+);
+
 const SearchView: FC<SearchViewProps> = () => {
+    const {data, refetch} = useSuggestedUsers();
+    const [suggestions, setSuggestions] = useState<ISerachSuggestion[]>(
+        [] as ISerachSuggestion[],
+    );
+    useEffect(() => {
+        const suggs =
+            data?.result?.map(
+                (user) =>
+                    ({
+                        title: user?.firstName + " " + user?.lastName || "",
+                        imageUrl: (getUserProfileImage(user) as string) || "",
+                        url: `users/${user.userName}`,
+                        userName: user?.userName || "",
+                    } as ISerachSuggestion),
+            ) || ([] as ISerachSuggestion[]);
+        setSuggestions(suggs);
+    }, [data]);
     return (
         <div className="w-full relative h-full flex justify-center items-center flex-nowrap flex-row bg-dark bg-opacity-50 backdrop-blur-md px-2 py-1">
-            <div className="w-full h-full flex justify-between items-center rounded-full bg-secondary bg-opacity-70 peer">
-                <button
-                    type="button"
-                    title="search"
-                    className="border-none bg-transparent flex justify-center items-center p-3">
-                    <HiSearch size={25} />
-                </button>
-                <div className="w-full h-10 flex justify-between items-center flex-nowrap flex-row p-1">
-                    <input
-                        className="w-full h-full bg-transparent border-none outline-none p-2"
-                        type="text"
-                        placeholder="Search twitcher"
-                    />
-                </div>
-            </div>
+            <SearchInputView
+                data={data?.result ?? []}
+                setSuggestions={setSuggestions}
+            />
             <div className="w-full absolute top-[40px] left-0 z-20 hidden peer-hover:flex hover:flex justify-center items-center">
-                <div className="w-full max-h-96 overflow-y-auto overflow-x-hidden">
-                    <SearchSuggestionView />
+                <div className="w-full overflow-y-auto overflow-x-hidden">
+                    <SearchSuggestionView suggestions={suggestions} />
                 </div>
             </div>
         </div>

@@ -4,34 +4,21 @@ import {FC} from "react";
 import {HiOutlineCog, HiX} from "react-icons/hi";
 import SimpleCard from "../../../core-ui/simple-card/simple-card";
 import defaultImage from "../../../../assets/images/default-profile.png";
+import {ISerachSuggestion} from "../search-view";
 
-interface SearchSuggestionViewProps {}
-
-interface ISerachSuggestion {
-    title: string;
-    url: string;
-    imageUrl: string;
-    userName: string;
+interface SearchSuggestionViewProps {
+    suggestions: ISerachSuggestion[];
 }
 
-const searchSuggestions: ISerachSuggestion[] = [
-    {
-        title: "Search Suggestion 1",
-        url: "/search/search-suggestion-1",
-        imageUrl: "",
-        userName: "userName1",
-    },
-];
-
-const SearchSuggestionView: FC<SearchSuggestionViewProps> = () => {
+const SearchSuggestionView: FC<SearchSuggestionViewProps> = ({suggestions}) => {
     return (
         <div className="w-full flex justify-center items-center">
             <div className="w-full flex justify-center items-center rounded-2xl bg-dark overflow-hidden border-2 border-primary">
                 <SimpleCard
                     icon={<HiOutlineCog size={20} />}
-                    items={searchSuggestions}
+                    items={suggestions}
                     title="Trends for you"
-                    containerClassName="bg-secondary bg-opacity-50 rounded-2xl overflow-hidden"
+                    containerClassName="bg-secondary bg-opacity-50 rounded-2xl overflow-y-auto overflow-x-hidden max-h-96"
                     iconButtonClassName="text-primary p-2 mr-1"
                     showMoreButtonClassName="px-2 py-3 hover:bg-slate-100 hover:bg-opacity-5 text-primary"
                     listItemClassName="hover:bg-slate-100 hover:bg-opacity-5 p-2"

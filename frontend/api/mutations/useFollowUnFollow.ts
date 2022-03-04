@@ -12,7 +12,13 @@ export const handleFollowUnFollow = async (
     data: IFollowUnFollowData,
 ): Promise<ApiResult<boolean>> => {
     const response = await server_axios.post(
-        `users/${data.follow ? "Follow" : "UnFollow"}/${data.userName}`,
+        `Users/${data.follow ? "Follow" : "UnFollow"}/${data.userName}`,
+        null,
+        {
+            headers: {
+                Authorization: `Bearer ${data.token}`,
+            },
+        },
     );
     return response.data;
 };

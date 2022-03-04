@@ -9,21 +9,16 @@ public class UsersController : ControllerBase
 
     public UsersController(IMediator mediator, IOptionsMonitor<JwtConfig> monitor)
     {
-
         _mediator = mediator;
         _jwtConfig = monitor.CurrentValue;
     }
 
     [HttpGet("GetAllUsers")]
-    public async Task<ActionResult<APIResult<List<User>>>> GetAllUsers()
+    public async Task<ActionResult<APIResult<List<OutUser>?>>> GetAllUsers()
     {
-        var res = await _mediator.Send(new GetUsersQuery());
-        var result = new APIResult<List<OutUser>>
-        {
-           Result = res,
-           Status = 200,
-        };
-        return Ok(result);
+        var result = await _mediator.Send(new GetUsersQuery());
+        if(result.Ok) return Ok(result);
+        return BadRequest(result);
     }
 
     [HttpPost("Follow/{followingUserName}")]

@@ -78,7 +78,7 @@ const HomeContextProvider: FC<HomeContextProviderProps> = ({
     initial,
 }) => {
     const router = useRouter();
-    const {connection} = useUserContext();
+    const {connection, user} = useUserContext();
     const initialForReducer: IHomeContextState = {
         feedTweets: initial.feedTweets ?? [],
     };
@@ -119,13 +119,22 @@ const HomeContextProvider: FC<HomeContextProviderProps> = ({
                     });
                 },
             );
-            connection?.on?.("TweetLiked", (tweetLiked: ApiResult<TweetLiked>) => {
-                console.log("event tweet liked => ",tweetLiked);
-                dispatch({
-                    type: "UPDATE_TWEET_LIKE",
-                    payload: tweetLiked.result,
-                });
-            });
+            connection?.on?.(
+                "TweetLiked",
+                (tweetLiked: ApiResult<TweetLiked>) => {
+                    console.log("event tweet liked => ", tweetLiked);
+                    dispatch({
+                        type: "UPDATE_TWEET_LIKE",
+                        payload: tweetLiked.result,
+                    });
+                },
+            );
+            connection?.send?.(
+                "ChackConnection",
+                user?.userName || "",
+                connection.connectionId,
+            );
+            console.log("connection => ", connection);
         }
     }, [connection]);
 

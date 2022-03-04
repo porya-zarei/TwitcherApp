@@ -57,6 +57,7 @@ const TweetImagesCarousel: FC<TweetImagesCarouselProps> = ({images, video}) => {
                                     src={baseImagesUrl + image}
                                     alt={""}
                                 />
+                                {/* <Image alt="" src={baseImagesUrl+image} layout="fill" /> */}
                             </div>
                         ))}
                 </Slider>

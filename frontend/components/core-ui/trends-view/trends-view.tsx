@@ -4,7 +4,9 @@ import {FC} from "react";
 import {HiOutlineCog, HiDotsHorizontal} from "react-icons/hi";
 import SimpleCard from "../../core-ui/simple-card/simple-card";
 
-interface TrendsViewProps {}
+interface TrendsViewProps {
+    cardContainerClassName?:string;
+}
 
 interface ITrend {
     title: string;
@@ -40,14 +42,16 @@ const TRENDS: ITrend[] = [
     },
 ];
 
-const TrendsView: FC<TrendsViewProps> = () => {
+const TrendsView: FC<TrendsViewProps> = ({
+    cardContainerClassName = "bg-secondary bg-opacity-50 rounded-2xl",
+}) => {
     return (
         <div className="w-full flex justify-center items-center">
             <SimpleCard
                 icon={<HiOutlineCog size={20} />}
                 items={TRENDS}
                 title="Trends for you"
-                containerClassName="bg-secondary bg-opacity-50 rounded-2xl overflow-hidden"
+                containerClassName={`overflow-hidden ${cardContainerClassName}`}
                 iconButtonClassName="text-primary p-2 mr-1"
                 showMoreButtonClassName="px-2 py-3 hover:bg-slate-100 hover:bg-opacity-5 text-primary"
                 listItemClassName="hover:bg-slate-100 hover:bg-opacity-5 p-2"

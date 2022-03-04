@@ -29,8 +29,12 @@ const FollowingButton: FC<FollowingButtonProps> = ({user}) => {
             title="Following"
             type="button"
             onClick={handleClick}
-            className="hover:text-red-500 h-10 transition-all hover:border-red-500 rounded-full text-white font-bold px-4 border-[1px] border-secondary flex justify-center items-center">
-            Following
+            className={`h-10 transition-all rounded-full text-white font-bold px-4 border-[1px] border-secondary flex justify-center items-center ${
+                user?.isFollowed
+                    ? "hover:text-red-500 hover:border-red-500"
+                    : "hover:text-primary hover:border-primary"
+            }`}>
+            {user?.isFollowed ? "UnFollow" : "Follow"}
         </button>
     );
 };

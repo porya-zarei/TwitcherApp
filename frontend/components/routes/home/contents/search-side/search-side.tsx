@@ -1,10 +1,15 @@
 import {FC} from "react";
 import MainLayoutSidesContaier from "../../../../core-ui/main-layout-container/main-layout-sides-container/main-layout-sides-container";
-import FollowSuggestionView from "./follow-suggestion-view/follow-suggestion-view";
 import SearchView from "../../../../core-ui/search-view/search-view";
 import TrendsView from "../../../../core-ui/trends-view/trends-view";
+import dynamic from "next/dynamic";
 
 interface SearchSideProps {}
+
+const FollowSuggestionView = dynamic(
+    () => import("./follow-suggestion-view/follow-suggestion-view"),
+    {ssr: false},
+);
 
 const SearchSide: FC<SearchSideProps> = () => {
     return (

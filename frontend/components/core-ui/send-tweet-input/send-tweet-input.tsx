@@ -1,7 +1,7 @@
+import dynamic from "next/dynamic";
 import {FC, useState} from "react";
 import {useSendTweet} from "../../../api/mutations/useSendTweet";
 
-import defaultProfile from "../../../assets/images/default-profile.png";
 import {useTweetsSideContext} from "../../../contexts/tweets-side-context/tweets-side-context";
 import {useUserContext} from "../../../contexts/user-context/user-context";
 import useHandleableState from "../../../hooks/useHandleableState";
@@ -9,8 +9,8 @@ import {ISendTweetData, TweetTypes} from "../../../types/data/tweet";
 import {getUserProfileImage, objectToFormData} from "../../../utils/helpers";
 import Avatar from "../../core-ui/avatar/avatar";
 import {SendICon, SendIconLoading} from "../../core-ui/common/common-icons";
-import SendTweetActionButtons from "../send-tweet-action-buttons/send-tweet-action-buttons";
 
+const SendTweetActionButtons = dynamic(() => import("../send-tweet-action-buttons/send-tweet-action-buttons"), {ssr:false});
 interface SendTweetInputProps {
     sendType?: TweetTypes;
     baseTweetId?: string;

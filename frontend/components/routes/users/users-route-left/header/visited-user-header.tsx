@@ -102,7 +102,7 @@ const VisitedUserHeader: FC<VisitedUserHeaderProps> = ({user}) => {
                             <span className="mr-1 font-bold">
                                 {user?.followersCount||0}
                             </span>
-                            <span className="text-secondary">Following</span>
+                            <span className="text-secondary">Follower</span>
                         </span>
                         <span className="mr-3">
                             <span className="mr-1 font-bold">
