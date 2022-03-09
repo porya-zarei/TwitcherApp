@@ -1,19 +1,20 @@
-﻿
-
-using API.DataLayer.DTOs;
-using API.DataLayer.Queries.Users;
-
-namespace API.Tests.Systems.Controllers;
+﻿namespace API.Tests.Systems.Controllers;
 
 public class TestUsersController
 {
+
     [Fact]
     public async Task TestGetAllUsers()
     {
         // Arrange
         var envMock = new Mock<IOptionsMonitor<JwtConfig>>();
         var mediatorMock = new Mock<IMediator>();
-        // mediatorMock.Setup();
+        var context = new Mock<MainContext>();
+        var query = new Mock<GetUsersQuery>();
+        var handler = new Mock<GetUsersQueryHandler>();
+        
+        handler.Setup(x => x.Handle(query.Object,It.IsAny<CancellationToken>())).ReturnsAsync(() => new APIResult<List<OutUser>?>());
+        mediatorMock.Setup( m => m.Send(query.Object,It.IsAny<CancellationToken>())).Returns(()=> new APIResult<List<OutUser>?>());
         var usersController = new UsersController(mediatorMock.Object,envMock.Object);
         
         var response = (await usersController.GetAllUsers());

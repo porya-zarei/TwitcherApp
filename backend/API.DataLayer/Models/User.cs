@@ -46,6 +46,7 @@ public class User
     public ICollection<Category>? InterestedCategories { get; set; } = new List<Category>();
 
     public ICollection<Chat> Chats { get; set; } = new List<Chat>() { };
+    public ICollection<Message> Messages { get; set; } = new List<Message>() { };
 }
 
 public enum UserTypes

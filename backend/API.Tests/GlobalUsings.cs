@@ -6,6 +6,7 @@ global using System.Threading.Tasks;
 global using MediatR;
 global using FluentAssertions;
 global using Microsoft.AspNetCore.Mvc;
+global using System.Threading;
 
 global using Microsoft.Extensions.Options;
 global using Moq;
@@ -14,3 +15,5 @@ global using API.Controllers;
 global using API.Utils.Configs;
 global using API.DataLayer.DTOs;
 global using API.DataLayer.Models;
+global using API.DataLayer.Queries.Users;
+global using API.DataLayer.Contexts;

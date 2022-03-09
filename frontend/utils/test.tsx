@@ -24,3 +24,40 @@ console.log(memoizedFn(1, 2));
 console.log(memoizedFn(1, 2));
 console.log(memoizedFn(1, 2));
 console.log(memoizedFn(1, 2));
+
+const createWords = async (word) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+    };
+    try {
+        const sendData = Object.entries(word)
+            .filter(([key, value]) => value && value.length > 0)
+            .reduce((acc, [key, value]) => {
+                acc[key] = value;
+                return acc;
+            }, {});
+
+        const res = await axios.post(
+            `http://alp.thescenius.com/api/v1/words`,
+            sendData,
+            config,
+        );
+        if (res.data.status) {
+            dispatch({
+                type: WORD_ACT,
+                status: res.data.status,
+                message: "کلمه ی جدید اضافه شد",
+            });
+            await allWords();
+            setStatus();
+        }
+    } catch (err) {
+        dispatch({
+            type: ERROR_CONNECTION,
+            message: err.response.data.errors.source,
+        });
+    }
+};

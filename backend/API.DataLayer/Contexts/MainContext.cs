@@ -42,35 +42,29 @@ public class MainContext : DbContext
         modelBuilder.Entity<User>()
             .HasMany(u => u.Followings);
 
-        //modelBuilder.Entity<Chat>()
-        //    .HasOne(c => c.Sender)
-        //    .WithMany(u => u.Chats)
-        //    .HasForeignKey(c => c.SenderId);
+        modelBuilder.Entity<Chat>()
+            .HasMany(c => c.Messages)
+            .WithOne(m => m.Chat)
+            .HasForeignKey(m => m.ChatId);
 
-        //modelBuilder.Entity<Chat>()
-        //    .HasOne(c => c.Receiver)
-        //    .WithMany(u => u.Chats)
-        //    .HasForeignKey(c => c.ReceiverId);
+        modelBuilder.Entity<Chat>()
+            .HasMany(c => c.Users)
+            .WithMany(u => u.Chats);
 
-        //modelBuilder.Entity<Chat>()
-        //    .HasMany(c => c.Messages)
-        //    .WithOne(m => m.Chat)
-        //    .HasForeignKey(m => m.ChatId);
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.Chat)
+            .WithMany(c => c.Messages)
+            .HasForeignKey(m => m.ChatId);
 
-        //modelBuilder.Entity<Message>()
-        //    .HasOne(m => m.Chat)
-        //    .WithMany(c => c.Messages)
-        //    .HasForeignKey(m => m.ChatId);
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.Sender)
+            .WithMany(u => u.Messages)
+            .HasForeignKey(m => m.SenderId);
+            
 
-        //modelBuilder.Entity<User>()
-        //    .HasMany(u => u.Chats)
-        //    .WithOne(c => c.Receiver)
-        //    .HasForeignKey(u => u.ReceiverId);
-
-        //modelBuilder.Entity<User>()
-        //    .HasMany(u => u.Chats)
-        //    .WithOne(c => c.Sender)
-        //    .HasForeignKey(u => u.SenderId);
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Chats)
+            .WithMany(c => c.Users);
     }
 
     public DbSet<User> Users { get; set; }

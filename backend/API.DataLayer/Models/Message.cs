@@ -6,7 +6,7 @@ public class Message
     public Guid MessageId { get; set; }
 
     [Required]
-    public string Text { get; set; } = "";
+    public string Content { get; set; } = "";
 
     public string Image { get; set; } = "";
     public string File { get; set; } = "";
@@ -22,13 +22,16 @@ public class Message
     public Guid ChatId { get; set; }
     public Chat? Chat { get; set; }
 
+    public Guid SenderId { get; set; }
+    public User? Sender { get; set; }
+
     [Required]
-    public DateTime SendingTime { get; set; }
+    public DateTime SendedAt { get; set; }
 }
 
 public enum ChatStatus
 {
     NotSended = 0,
     SendedNotSeened = 1,
-    sendedAndSeened = 2
+    SendedAndSeened = 2
 }

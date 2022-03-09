@@ -1,8 +1,6 @@
 ﻿namespace API.DataLayer.Queries.Users;
 
-public class GetUsersQuery : IRequest<APIResult<List<OutUser>?>>
-{
-}
+public class GetUsersQuery : IRequest<APIResult<List<OutUser>?>> {}
 
 
 public class GetUsersQueryHandler:IRequestHandler<GetUsersQuery, APIResult<List<OutUser>?>>
