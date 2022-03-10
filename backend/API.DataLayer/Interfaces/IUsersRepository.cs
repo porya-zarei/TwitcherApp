@@ -11,6 +11,8 @@ public interface IUsersRepository : IRepository<User>
     Task<User?> AuthenticateUser(LoginUser? loginUser);
     Task<bool> FollowingUser(string followerUserName, string followingUserName);
     Task<List<OutUser>> GetAllUsers();
+    Task<List<OutChat>> GetUserChats(string userName);
+    Task<List<User>> GetUsersWithUserNames(string[] userNames);
     Task<User?> GetUserWithUserName(string userName);
     Task<User?> GetUserWithUserName(string userName,bool full);
     Task<bool> IsUserNameUnique(string userName);

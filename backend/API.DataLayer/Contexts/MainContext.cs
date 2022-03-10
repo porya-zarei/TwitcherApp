@@ -51,6 +51,12 @@ public class MainContext : DbContext
             .HasMany(c => c.Users)
             .WithMany(u => u.Chats);
 
+        modelBuilder.Entity<Chat>()
+            .HasMany(c => c.Admins);
+
+        modelBuilder.Entity<Chat>()
+            .HasOne(c => c.Creator);
+
         modelBuilder.Entity<Message>()
             .HasOne(m => m.Chat)
             .WithMany(c => c.Messages)

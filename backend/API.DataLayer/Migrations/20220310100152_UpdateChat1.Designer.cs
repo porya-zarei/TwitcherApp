@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using API.DataLayer.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.DataLayer.Migrations
 {
     [DbContext(typeof(MainContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20220310100152_UpdateChat1")]
+    partial class UpdateChat1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,6 +97,9 @@ namespace API.DataLayer.Migrations
                     b.Property<Guid>("ChatId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("ChatStatus")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("text");
@@ -112,9 +117,6 @@ namespace API.DataLayer.Migrations
 
                     b.Property<long>("ImageSize")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("MessageStatus")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime>("SendedAt")
                         .HasColumnType("timestamp with time zone");

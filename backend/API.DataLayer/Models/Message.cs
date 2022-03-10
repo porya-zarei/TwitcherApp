@@ -17,7 +17,7 @@ public class Message
     public long VoiceSize { get; set; } = 0;
     public long VideoSize { get; set; } = 0;
 
-    public ChatStatus ChatStatus { get; set; } = ChatStatus.NotSended;
+    public MessageStatus MessageStatus { get; set; } = MessageStatus.NotSended;
 
     public Guid ChatId { get; set; }
     public Chat? Chat { get; set; }
@@ -29,7 +29,7 @@ public class Message
     public DateTime SendedAt { get; set; }
 }
 
-public enum ChatStatus
+public enum MessageStatus
 {
     NotSended = 0,
     SendedNotSeened = 1,

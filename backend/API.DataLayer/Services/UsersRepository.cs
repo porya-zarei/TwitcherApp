@@ -35,6 +35,12 @@ public class UsersRepository:Repository<User>,IUsersRepository
         return (await _set.Include(u => u.Followers).Include(u => u.Followings).FirstOrDefaultAsync(u => u.UserName == userName));
     }
 
+    public async Task<List<User>> GetUsersWithUserNames(string[] userNames)
+    {
+        var users = await _set.Where(u => userNames.Contains(u.UserName)).Include(u => u.Followings).ToListAsync();
+        return users;
+    }
+
 
     public async Task<User?> GetUserWithUserName(string userName,bool full)
     {
@@ -134,5 +140,14 @@ public class UsersRepository:Repository<User>,IUsersRepository
             if (user != null) user.ConnectionId = connectionId; return true;
         }
         return false;
+    }
+
+    public async Task<List<OutChat>> GetUserChats(string userName)
+    {
+        var user = await _set
+            .Include(u => u.Chats)
+            .ThenInclude(c => c.Messages)
+            .FirstOrDefaultAsync(u => u.UserName == userName);
+        return user != null ? user.Chats.Select(c => OutChat.MapToOutChat(c)).ToList() : new List<OutChat> { };
     }
 }

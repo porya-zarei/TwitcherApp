@@ -37,6 +37,8 @@ public class User
 
     public UserTypes UserType { get; set; } = UserTypes.Bronze;
 
+    public UserAddToChatStatus AddToChatStatus { get; set; } = UserAddToChatStatus.Open;
+
     //[JsonIgnore]
     public ICollection<Tweet> Tweets { get; set; } = new List<Tweet>();
     //[JsonIgnore]
@@ -66,4 +68,11 @@ public enum UserStatus
     Successful,
     Failed,
     CustomStatus
+}
+
+public enum UserAddToChatStatus
+{
+    Open,
+    Followings,
+    Close
 }
