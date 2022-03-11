@@ -7,8 +7,6 @@ import ChatMain from "./chat-main/chat-main";
 interface ChatViewProps {}
 
 const ChatView: FC<ChatViewProps> = () => {
-    const {isMobile} = useMessagesContext();
-    const showChatView = isMobile ? "hidden" : "block";
     return (
         <div className={`w-full min-h-screen h-screen`}>
             <section className="flex justify-start items-start flex-wrap w-full h-full relative overflow-hidden">
@@ -18,7 +16,7 @@ const ChatView: FC<ChatViewProps> = () => {
                 <main className="w-full h-[70vh]">
                     <ChatMain />
                 </main>
-                <footer className="w-full h-[10vh] sticky bottom-0 z-10">
+                <footer className="w-full h-[10vh] sticky bottom-0 z-[100] dark:bg-dark bg-white">
                     <ChatFooter />
                 </footer>
             </section>

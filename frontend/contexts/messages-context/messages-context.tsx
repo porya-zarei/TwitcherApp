@@ -55,20 +55,19 @@ const MessagesContextProvider: FC<MessagesContextProviderProps> = ({
         setFilteredChats(value);
     }, []);
 
-    const [selectedChat, setSelectedChat] = useState<PartialChat>(
-        {} as PartialChat,
-    );
+    const [selectedChat, setSelectedChat] = useState<PartialChat>({
+        ...initial?.chats?.[0],
+    });
 
-    // const changeSelectChat = useCallback<Dispatch<SetStateAction<PartialChat>>>(
-    //     (value) => {
-    //         console.log("changeSelectChat =>", value);
-    //         setSelectedChat(value);
-    //     },
-    //     [],
-    // );
+    const changeSelectedChat = useCallback<
+        Dispatch<SetStateAction<PartialChat>>
+    >((value) => {
+        console.log("changeSelectedChat =>", value);
+        setSelectedChat(value);
+    }, []);
 
-    // const changeSelectChat = (value: SetStateAction<PartialChat>) => {
-    //     console.log("changeSelectChat =>", value);
+    // const changeSelectedChat = (value: SetStateAction<PartialChat>) => {
+    //     console.log("changeSelectedChat =>", value);
     //     setSelectedChat(value);
     // };
 
@@ -86,7 +85,6 @@ const MessagesContextProvider: FC<MessagesContextProviderProps> = ({
     useEffect(() => {
         if (connection && connection.on) {
             connection.on("ChatCreated", (chat: PartialChat) => {
-                console.log("ChatCreated => ", chat);
                 setChats((p) => [...p, chat]);
             });
             connection.on("MessageArrived", (message: PartialMessage) => {
@@ -110,7 +108,7 @@ const MessagesContextProvider: FC<MessagesContextProviderProps> = ({
             filteredChats,
             changeFilteredChats,
             selectedChat,
-            changeSelectChat: setSelectedChat,
+            changeSelectedChat,
             isMobile,
             setIsMobile,
             isInChat,
@@ -121,7 +119,7 @@ const MessagesContextProvider: FC<MessagesContextProviderProps> = ({
             filteredChats,
             changeFilteredChats,
             selectedChat,
-            setSelectedChat,
+            changeSelectedChat,
             isMobile,
             setIsMobile,
             isInChat,

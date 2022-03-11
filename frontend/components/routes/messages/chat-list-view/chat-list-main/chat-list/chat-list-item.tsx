@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {FC, MouseEvent, MouseEventHandler, useState} from "react";
+import {FC, MouseEvent, MouseEventHandler, useEffect, useState} from "react";
 import {useMessagesContext} from "../../../../../../contexts/messages-context/messages-context";
 import {useUserContext} from "../../../../../../contexts/user-context/user-context";
 import {PartialChat} from "../../../../../../types/data/chat";
@@ -17,21 +17,21 @@ interface ChatListItemProps {
 
 const ChatListItem: FC<ChatListItemProps> = ({chat}) => {
     const {user} = useUserContext();
-    const {changeSelectedChat} = useMessagesContext();
+    const {changeSelectedChat,setIsInChat} = useMessagesContext();
     const otherUser: PartialUser = {
         ...getOtherUser(chat.users, user?.userName),
     };
     const handleSelectChat = (e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log("selected chat => ", chat);
-        console.log("other user in item => ", otherUser);
-        changeSelectedChat?.(chat);
+        changeSelectedChat?.({...chat});
+        setIsInChat?.(true);
     };
     return (
         <Link href={chat?.chatId || ""}>
             <a
                 onClick={handleSelectChat}
+                type="button"
                 className="w-full z-0 relative flex justify-start h-16 items-center content-between flex-nowrap flex-row hover:bg-slate-500 hover:bg-opacity-25">
                 <div className="w-auto h-full flex justify-center items-center p-2">
                     <div className="rounded-full w-[50px] h-[50px] overflow-hidden">
