@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import {FC} from "react";
-import {HiOutlineCog, HiX} from "react-icons/hi";
+import {HiOutlineCog, HiOutlineMailOpen} from "react-icons/hi";
 import SimpleCard from "../../../core-ui/simple-card/simple-card";
 import defaultImage from "../../../../assets/images/default-profile.png";
 import {ISerachSuggestion} from "../search-view";
+import {IStartChatUser} from "../../../../types/data/chat";
+import StartChatButton from "../../chat/start-chat-button/start-chat-button";
 
 interface SearchSuggestionViewProps {
     suggestions: ISerachSuggestion[];
@@ -12,7 +14,7 @@ interface SearchSuggestionViewProps {
 
 const SearchSuggestionView: FC<SearchSuggestionViewProps> = ({suggestions}) => {
     return (
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full flex justify-center items-center z-20">
             <div className="w-full flex justify-center items-center rounded-2xl bg-dark overflow-hidden border-2 border-primary">
                 <SimpleCard
                     icon={<HiOutlineCog size={20} />}
@@ -45,12 +47,9 @@ const SearchSuggestionView: FC<SearchSuggestionViewProps> = ({suggestions}) => {
                                     </span>
                                 </div>
                                 <div className="h-full flex justify-center items-center">
-                                    <button
-                                        type="button"
-                                        title="detail"
-                                        className="bg-transparent border-none text-opacity-60 text-slate-900 dark:text-slate-200 hover:text-primary">
-                                        <HiX size={20} />
-                                    </button>
+                                    <StartChatButton
+                                        userName={suggestion.userName || ""}
+                                    />
                                 </div>
                             </a>
                         </Link>

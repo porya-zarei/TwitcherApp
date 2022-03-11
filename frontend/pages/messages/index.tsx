@@ -12,11 +12,12 @@ import {decodeToken} from "../../utils/jwt-helper";
 
 interface MessagesPageProps {
     chats?: PartialChat[];
+    isMobile?: boolean;
 }
 
-const MessagesPage: NextPage<MessagesPageProps> = ({chats}) => {
+const MessagesPage: NextPage<MessagesPageProps> = ({chats, isMobile}) => {
     return (
-        <MessagesContextProvider initial={{chats}}>
+        <MessagesContextProvider initial={{chats, isMobile}}>
             <MessagesRoute />
         </MessagesContextProvider>
     );
@@ -44,6 +45,7 @@ export const getServerSideProps: GetServerSideProps<
                 token,
             },
         });
+        const isMobile = req.headers["user-agent"]?.includes("Mobile");
         return {
             props: {
                 dehydratedState: dehydrate(queryClient),
@@ -51,6 +53,7 @@ export const getServerSideProps: GetServerSideProps<
                 user: response.result,
                 token,
                 chats,
+                isMobile,
             },
         };
     } else {

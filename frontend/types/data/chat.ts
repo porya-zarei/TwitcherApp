@@ -23,3 +23,12 @@ export enum ChatTypes {
 }
 
 export type PartialChat = Partial<Chat>;
+
+export interface IStartChatUser {
+    creatorUserName: string;
+    token: string;
+    title: string;
+    description?: string;
+    chatType?: ChatTypes;
+    userNames: string[];
+}

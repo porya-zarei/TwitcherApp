@@ -37,7 +37,7 @@ const SearchView: FC<SearchViewProps> = () => {
         setSuggestions(suggs);
     }, [data]);
     return (
-        <div className="w-full relative h-full flex justify-center items-center flex-nowrap flex-row bg-dark bg-opacity-50 backdrop-blur-md px-2 py-1">
+        <div className="w-full relative h-full flex justify-center items-center flex-nowrap flex-row bg-dark bg-opacity-50 backdrop-blur-md px-2 py-1 z-30">
             <SearchInputView
                 data={data?.result ?? []}
                 setSuggestions={setSuggestions}

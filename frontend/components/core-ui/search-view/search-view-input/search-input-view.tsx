@@ -50,9 +50,9 @@ const SearchInputView: FC<SearchInputViewProps> = ({data, setSuggestions}) => {
             </button>
             <div className="w-full h-10 flex justify-between items-center flex-nowrap flex-row p-1">
                 <input
-                    className="w-full h-full bg-transparent border-none outline-none p-2"
+                    className="w-full h-full caret-primary bg-transparent border-none outline-none p-2"
                     type="text"
-                    placeholder="Search twitcher"
+                    placeholder="Search ..."
                     value={searchText}
                     onChange={handleChangeSearchText}
                 />

@@ -56,3 +56,8 @@ export const getUserBackgroundImage = (
     // }
     return imageUrl;
 };
+
+export const getOtherUser = (users?: PartialUser[], userName?: string) => {
+    const otherUser = users?.find((user) => user.userName !== userName);
+    return otherUser;
+};

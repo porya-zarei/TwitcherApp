@@ -1,5 +1,3 @@
-import Link from "next/link";
-import {HiDotsHorizontal, HiOutlineCog} from "react-icons/hi";
 import {getRandomNumber} from "../../../utils/helpers";
 
 interface SimpleCardProps<T> {

@@ -28,7 +28,7 @@ public class CreateChatCommandHandler : IRequestHandler<CreateChatQuery, APIResu
                 var chat = request.CreateChat.MapToChat(creator,users);
                 var createdChat = await _unitOfWork.chatsRepository.AddEntryAsync(chat);
                 var connections = createdChat.Users.Select(u => u.ConnectionId).ToList();
-                await _usersHub.Clients.Clients(connections).SendAsync(UsersHubEvents.ChatCreated, createdChat,cancellationToken);
+                await _usersHub.Clients.Clients(connections).SendAsync(UsersHubEvents.ChatCreated, OutChat.MapToOutChat(createdChat),cancellationToken);
                 return new APIResult<bool>
                 {
                     Result = true,

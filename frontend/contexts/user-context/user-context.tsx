@@ -83,7 +83,7 @@ const UserContextProvider: FC<UserContextProviderProps> = ({
 
         const onSuccess = async () => {
             console.log("successfull connection");
-            console.log("connection => ", connection);
+            console.log("connection => ", userConnection);
             setConnection(userConnection);
         };
         const onReject = () => {

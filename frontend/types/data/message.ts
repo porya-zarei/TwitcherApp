@@ -2,19 +2,19 @@ import {PartialUser} from "./user";
 
 export interface Message {
     messageId: string;
-    Content: string;
-    Image: string;
-    File: string;
-    Voice: string;
-    Video: string;
+    content: string;
+    image: string;
+    file: string;
+    voice: string;
+    video: string;
     fileSize: number;
     imageSize: number;
     voiceSize: number;
     videoSize: number;
     MessageStatus: MessageStatus;
     chatId: string;
-    Sender: PartialUser;
-    SendedAt: string;
+    sender: PartialUser;
+    sendedAt: string;
 }
 
 enum MessageStatus {
