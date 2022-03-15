@@ -13,6 +13,8 @@ public class ChatsRepository : Repository<Chat>, IChatsRepository
             .Include(c => c.Users)
             .Include(c => c.Admins)
             .Include(c => c.Creator)
+            .AsSplitQuery()
+            .AsNoTracking()
             .FirstOrDefaultAsync(c => c.ChatId == chatId);
         return chat;
     }
@@ -24,8 +26,10 @@ public class ChatsRepository : Repository<Chat>, IChatsRepository
             .Include(c => c.Users)
             .Include(c => c.Admins)
             .Include( c => c.Creator)
+            .AsSplitQuery()
             .Where(c => c.Users.Select(u => u.UserName).Contains(userName))
             .Select(c => OutChat.MapToOutChat(c))
+            .AsNoTracking()
             .ToListAsync();
         return chats ?? new List<OutChat>();
     }
