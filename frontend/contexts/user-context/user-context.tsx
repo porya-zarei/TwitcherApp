@@ -36,7 +36,6 @@ const UserContextProvider: FC<UserContextProviderProps> = ({
     initial,
 }) => {
     const {notify} = useNotification();
-    const router = useRouter();
     const [user, setUser] = useState<PartialUser>({
         ...{...(initial?.user ?? ({} as PartialUser))},
     });
@@ -79,6 +78,15 @@ const UserContextProvider: FC<UserContextProviderProps> = ({
 
         userConnection.on("ConnectionChecked", (connId) => {
             console.log(connId);
+        });
+
+        userConnection.onreconnected(() => {
+            console.log("reconnected");
+            connection?.send?.(
+                "ChackConnection",
+                user?.userName || "",
+                connection.connectionId,
+            );
         });
 
         const onSuccess = async () => {

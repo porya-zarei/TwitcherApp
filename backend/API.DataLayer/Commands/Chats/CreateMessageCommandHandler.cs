@@ -26,8 +26,8 @@ public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand,
             string imageName = "";
             string videoName = "";
             string voiceName = "";
-            var sender = await _unitOfWork.usersRepository.GetUserWithUserName(request.CreateMessage.SenderUserName);
-            var chat = await _unitOfWork.chatsRepository.GetFullChat(request.CreateMessage.ChatId);
+            var sender = await _unitOfWork.usersRepository.GetUserWithUserName(request.CreateMessage.SenderUserName,true,false);
+            var chat = await _unitOfWork.chatsRepository.GetFullChat(request.CreateMessage.ChatId,false);
             if (sender is not null && chat is not null)
             {
                 if (request.CreateMessage.Image is not null)
@@ -39,10 +39,15 @@ public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand,
                 if (request.CreateMessage.Voice is not null)
                     voiceName = await Uploader.UploadVoice(request.CreateMessage.Voice, _env.WebRootPath)??"";
                 
-                var message = request.CreateMessage.MapToMessage(sender,chat, imageName, videoName, fileName, voiceName);
+                var message = request.CreateMessage.MapToMessage(sender,chat,imageName, videoName, fileName, voiceName);
+                message.Sender = sender;
+                message.SenderId = sender.UserId;
+                message.Chat = chat;
+                message.ChatId = chat.ChatId;
                 var createdMessage = await _unitOfWork.messagesRepository.AddEntryAsync(message);
+                
                 var connections = chat.Users.Select(u => u.ConnectionId).ToList();
-                await _usersHub.Clients.Clients(connections).SendAsync(UsersHubEvents.MessageArrived, createdMessage,cancellationToken);
+                await _usersHub.Clients.Clients(connections).SendAsync(UsersHubEvents.MessageArrived, OutMessage.MapToOutMessage(createdMessage),cancellationToken);
                 return new APIResult<bool>
                 {
                     Result = true,

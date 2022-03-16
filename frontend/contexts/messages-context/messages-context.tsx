@@ -37,17 +37,11 @@ const MessagesContextProvider: FC<MessagesContextProviderProps> = ({
 }) => {
     const {connection} = useUserContext();
     const [chats, setChats] = useState<PartialChat[]>([
-        ...(initial.chats ?? []),
+        ...(initial.chats || []),
     ]);
 
-    // const changeChats = useCallback<Dispatch<SetStateAction<PartialChat[]>>>(
-    //     (value) => {
-    //         setChats(value);
-    //     },
-    //     [],
-    // );
     const [filteredChats, setFilteredChats] = useState<PartialChat[]>([
-        ...(initial.chats ?? []),
+        ...(initial.chats || []),
     ]);
     const changeFilteredChats = useCallback<
         Dispatch<SetStateAction<PartialChat[]>>
@@ -65,11 +59,6 @@ const MessagesContextProvider: FC<MessagesContextProviderProps> = ({
         console.log("changeSelectedChat =>", value);
         setSelectedChat(value);
     }, []);
-
-    // const changeSelectedChat = (value: SetStateAction<PartialChat>) => {
-    //     console.log("changeSelectedChat =>", value);
-    //     setSelectedChat(value);
-    // };
 
     const [isMobile, setIsMobile] = useState(initial?.isMobile ?? false);
     const [isInChat, setIsInChat] = useState(false);
@@ -93,9 +82,14 @@ const MessagesContextProvider: FC<MessagesContextProviderProps> = ({
                 const chat = oldChats.find(
                     (c) => c?.chatId === message?.chatId,
                 );
+                console.log("chat => ", chat, oldChats);
                 if (chat && chat.messages) {
                     chat.messages = [...(chat?.messages || []), message];
+                    console.log("chat => ", chat);
                     setChats([...oldChats]);
+                    if (selectedChat.chatId === message.chatId) {
+                        setSelectedChat({...chat});
+                    }
                 } else {
                     setChats([...oldChats, {...chat, messages: [message]}]);
                 }

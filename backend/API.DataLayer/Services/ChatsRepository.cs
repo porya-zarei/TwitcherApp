@@ -6,15 +6,17 @@ public class ChatsRepository : Repository<Chat>, IChatsRepository
     {
     }
 
-    public async Task<Chat?> GetFullChat(Guid chatId)
+    public async Task<Chat?> GetFullChat(Guid chatId,bool? tracking = false)
     {
-        var chat = await _set
+        var query = _set
             .Include(c => c.Messages)
             .Include(c => c.Users)
             .Include(c => c.Admins)
             .Include(c => c.Creator)
-            .AsSplitQuery()
-            .AsNoTracking()
+            .AsSplitQuery();
+        if (tracking != null && (bool)!tracking)
+            query.AsNoTracking();
+        var chat = await query
             .FirstOrDefaultAsync(c => c.ChatId == chatId);
         return chat;
     }

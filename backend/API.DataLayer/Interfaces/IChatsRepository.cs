@@ -2,6 +2,6 @@
 
 public interface IChatsRepository : IRepository<Chat>
 {
-    Task<Chat?> GetFullChat(Guid chatId);
+    Task<Chat?> GetFullChat(Guid chatId,bool? tracking = false);
     Task<List<OutChat>> GetUserChats(string userName);
 }

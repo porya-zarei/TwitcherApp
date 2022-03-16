@@ -17,7 +17,7 @@ interface ChatListItemProps {
 
 const ChatListItem: FC<ChatListItemProps> = ({chat}) => {
     const {user} = useUserContext();
-    const {changeSelectedChat,setIsInChat} = useMessagesContext();
+    const {changeSelectedChat, setIsInChat} = useMessagesContext();
     const otherUser: PartialUser = {
         ...getOtherUser(chat.users, user?.userName),
     };
@@ -53,7 +53,7 @@ const ChatListItem: FC<ChatListItemProps> = ({chat}) => {
                         </span>
                     </span>
                     <span className="w-full text-xs text-opacity-60 text-slate-900 dark:text-slate-200">
-                        {chat?.messages?.[0]?.content || ""}
+                        {chat?.messages?.at(-1)?.content || ""}
                     </span>
                 </div>
                 <div className="absolute top-0 right-0 p-1 flex justify-center content-evenly flex-wrap">

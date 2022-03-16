@@ -14,7 +14,7 @@ public interface IUsersRepository : IRepository<User>
     Task<List<OutChat>> GetUserChats(string userName);
     Task<List<User>> GetUsersWithUserNames(string[] userNames);
     Task<User?> GetUserWithUserName(string userName);
-    Task<User?> GetUserWithUserName(string userName,bool full);
+    Task<User?> GetUserWithUserName(string userName,bool full,bool? tracking=false);
     Task<bool> IsUserNameUnique(string userName);
     Task<bool> UnFollowingUser(string followerUserName, string followedUserName);
 }

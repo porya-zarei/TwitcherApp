@@ -11,16 +11,27 @@ export interface Message {
     imageSize: number;
     voiceSize: number;
     videoSize: number;
-    MessageStatus: MessageStatus;
+    messageStatus: MessageStatus;
     chatId: string;
     sender: PartialUser;
     sendedAt: string;
 }
 
-enum MessageStatus {
+export enum MessageStatus {
     NotSended = 0,
     SendedNotSeened = 1,
     SendedAndSeened = 2,
 }
 
 export type PartialMessage = Partial<Message>;
+
+export interface MessageData {
+    content: string;
+    file?: File | null;
+    image?: File | null;
+    video?: File | null;
+    voice?: File | null;
+    chatId: string;
+    messageStatus?: MessageStatus;
+    senderUserName?: string;
+}
